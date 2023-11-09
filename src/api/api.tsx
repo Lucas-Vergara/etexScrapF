@@ -1,5 +1,5 @@
 // api.tsx
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = process.env.API_URL;
 
 interface Product {
   _id: string;
@@ -37,7 +37,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
 
 export const runScript = async () => {
   try {
-    const response = await fetch("http://localhost:3001/ejecutar-script");
+    const response = await fetch(`${BASE_URL}/ejecutar-script`);
     const data = await response.json();
     console.log("Respuesta del servidor:", data);
   } catch (error) {
