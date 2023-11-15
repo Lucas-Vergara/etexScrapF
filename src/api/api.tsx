@@ -1,7 +1,4 @@
-// api.tsx
-const BASE_URL = process.env.REACT_APP_API_URL;
-
-console.log(BASE_URL);
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 interface Product {
   _id: string;
@@ -49,7 +46,7 @@ export const runScript = async () => {
 
 export const downloadExcel = async (): Promise<Blob> => {
   try {
-    const response = await fetch(`${BASE_URL}/scrapData/download-excel`);
+    const response = await fetch(`${BASE_URL}/download-excel`);
 
     if (response.ok) {
       // Convierte la respuesta a un blob (formato binario)

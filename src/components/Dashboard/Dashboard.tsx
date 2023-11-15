@@ -35,7 +35,7 @@ const Dashboard: React.FC = () => {
       const blob = await downloadExcel();
 
       // Usa FileSaver.js para guardar el blob como un archivo
-      saveAs(blob, "scrap-data.xlsx");
+      saveAs(blob, "productos_etex.xlsx");
 
       console.log("Descarga exitosa");
     } catch (error) {
@@ -64,8 +64,6 @@ const Dashboard: React.FC = () => {
     const filteredProducts = (originalData ?? []).filter((product) =>
       product.sku.toLowerCase().includes(skuInput.toLowerCase())
     );
-
-    console.log("entre");
 
     // Actualiza el estado de los productos filtrados
     setFilteredData(filteredProducts);
