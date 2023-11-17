@@ -1,8 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import { saveAs } from "file-saver";
 import { downloadExcel, fetchProducts, runScript } from "../../api/api";
-import { createLineChart } from "../Chart/chartUtils";
+import "./dashboard.css";
+import { Container, Link, Typography } from "@mui/material";
 
 interface Product {
   _id: string;
@@ -15,19 +16,12 @@ interface Product {
 }
 
 const Dashboard: React.FC = () => {
-  const [skuInput, setSkuInput] = useState<string>("");
-
   const [originalData, setOriginalData] = useState<Product[] | undefined>(
     undefined
   );
-  const [filteredData, setFilteredData] = useState<Product[]>([]);
 
   const handleRunScript = async () => {
     runScript();
-  };
-
-  const handleSkuChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSkuInput(event.target.value);
   };
 
   const handleDownloadExcel = async () => {
@@ -56,39 +50,11 @@ const Dashboard: React.FC = () => {
     fetchData();
   }, []);
 
-  const chartRef = useRef<HTMLCanvasElement | null>(null);
-
-  const handleFilterBySku = () => {
-    // Filtra los productos por SKU
-
-    const filteredProducts = (originalData ?? []).filter((product) =>
-      product.sku.toLowerCase().includes(skuInput.toLowerCase())
-    );
-
-    // Actualiza el estado de los productos filtrados
-    setFilteredData(filteredProducts);
-  };
-
-  useEffect(() => {
-    if (filteredData.length > 0) {
-      // Extracting labels and data for the chart
-      const labels = filteredData.map((item) => item.date);
-      const prices = filteredData.map((item) => item.price);
-
-      const chartData = {
-        title: `${filteredData[0].name} | ${filteredData[0].brand} | ${filteredData[0].distributor}`,
-        labels: labels,
-        data: prices,
-      };
-
-      // Create the chart using the utility function
-      createLineChart("myChart", chartData);
-    }
-  }, [filteredData, skuInput]);
-
   return (
     <div>
-      <h1>Dashboard</h1>
+      <Container maxWidth="sm" style={{ textAlign: "center" }}>
+        <h1>Herramienta levantamiento de PVP</h1>
+      </Container>
       <Button variant="contained" onClick={handleRunScript}>
         Ejecutar Script
       </Button>
@@ -99,16 +65,51 @@ const Dashboard: React.FC = () => {
       <br />
       <br />
       <br />
-      <div>
-        <label>Ingrese SKU:</label>
-        <input type="text" value={skuInput} onChange={handleSkuChange} />
-        <button onClick={handleFilterBySku}>Filtrar</button>
+      <div className="disclaimer">
+        <div>
+          *Disclaimer: Esta herramienta es de uso exclusivo de colaboradores
+          designados de Etex Chile para visualizar el levantamiento de precios a
+          la venta al público (PVP).
+        </div>
+        <div>
+          Toda la información recogida en esta plataforma es de acceso público a
+          través de las distintas páginas web disponibles de nuestros
+          distribuidores.
+        </div>
       </div>
-      <canvas
-        id="myChart"
-        ref={chartRef}
-        style={{ width: "100px", height: "100px" }}
-      ></canvas>
+      <footer>
+        <div className="footer-container">
+          <div className="footer-shape left-square"></div>
+          <div className="footer-shape left-shape"></div>
+          <Container maxWidth="sm" style={{ textAlign: "center" }}>
+            <Typography
+              variant="body2"
+              style={{
+                paddingTop: "18px",
+                fontStyle: "italic",
+                color: "#FFFFE1",
+              }}
+            >
+              Desarrollado por{" "}
+              <Link
+                href="https://www.linkedin.com/in/lucas-vergara-78a8891b5/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "#FFEEAF",
+                  textDecoration: "none",
+                }}
+              >
+                Lucas Vergara
+              </Link>
+            </Typography>
+          </Container>
+
+          <div className="footer-shape right-shape"></div>
+          <div className="footer-shape right-square"></div>
+        </div>
+      </footer>
+      <img src="Etex_Logo.png" alt="Etex Logo" className="etex-logo" />
     </div>
   );
 };
