@@ -1,5 +1,5 @@
-import React from "react";
 import { Container, Link, Typography } from "@mui/material";
+import "./footer.css";
 
 function Footer() {
   return (
@@ -11,7 +11,7 @@ function Footer() {
           <Typography
             variant="body2"
             style={{
-              paddingTop: "18px",
+              paddingTop: "7px",
               fontStyle: "italic",
               color: "#FFFFE1",
             }}
@@ -34,6 +34,7 @@ function Footer() {
         <div className="footer-shape right-shape"></div>
         <div className="footer-shape right-square"></div>
       </div>
+      <img src="Etex_Logo.png" alt="Etex Logo" className="etex-logo" />
     </footer>
   );
 }

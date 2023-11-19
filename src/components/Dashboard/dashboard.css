@@ -16,67 +16,11 @@
   --gradient-radial: radial-gradient(var(--black), var(--orange-peel), var(--spanish-orange), var(--harvest-gold), var(--spanish-orange-2));
 }
 
-/* Estilos para el footer */
-footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50px;
-  background-color: var(--spanish-orange);
-}
-
 .disclaimer {
   position: fixed;
-  bottom: 60px;
-  padding-right: 250px;
+  bottom: 30px;
+  padding-right: 171px;
   left: 0;
-}
-
-.etex-logo {
-  position: fixed;
-  bottom: 0px;
-  right: 0;
-  height: 100px;
-}
-
-.footer-container {
-  margin-right: 240px;
-  position: relative;
-}
-
-.footer-shape {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 60px; /* Ajusta el ancho según tus necesidades */
-}
-
-.left-square {
-  height: 50px;
-  left: 0; /* Controla la posición del borde izquierdo */
-  background: var(--dark-orange);
-}
-
-.left-shape {
-  height: 50px;
-  left: 60px; /* Controla la posición del borde izquierdo */
-  background: var(--dark-orange);
-  clip-path: polygon(0% 0%, 100% 100%, 0% 100%); /* Forma de rombo */
-}
-
-.right-square {
-  height: 150px;
-  right: 0; /* Controla la posición del borde izquierdo */
-  background: var(--harvest-gold);
-  clip-path: polygon(0% 0%, 100% 0%, 0% 100%); /* Forma de rombo con diagonal hacia la izquierda */
-}
-
-.right-shape {
-  clip-path: polygon(100% -90%, 0% 100%, 100% 100%); /* Forma de rombo con diagonal hacia la izquierda */
-  height: 50px;
-  right: 60px; /* Controla la posición del borde derecho */
-  background: var(--harvest-gold);
 }
 
 /* Estilos para el título h1 */
@@ -84,20 +28,6 @@ h1 {
   color: #333;
   font-size: 24px;
   margin-bottom: 20px;
-}
-
-/* Estilos para la entrada de SKU y el botón de filtrar */
-input {
-  padding: 5px;
-  margin-right: 10px;
-}
-
-button {
-  padding: 8px;
-  background-color: var(--spanish-orange);
-  color: white;
-  border: none;
-  cursor: pointer;
 }
 
 /* Estilos para el gráfico */

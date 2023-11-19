@@ -27,7 +27,13 @@ export default function NavBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" sx={{ backgroundColor: "white" }}>
+      <AppBar
+        position="static"
+        sx={{
+          backgroundColor: "white",
+          boxShadow: "0px 0px 10px 0px lightgray",
+        }}
+      >
         <Toolbar>
           <div style={{ flexGrow: 1 }}>
             <img src="/favicon.ico" alt="" style={{ height: "35px" }} />

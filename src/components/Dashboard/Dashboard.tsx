@@ -21,23 +21,6 @@ const Dashboard: React.FC = () => {
     undefined
   );
 
-  const handleRunScript = async () => {
-    runScript();
-  };
-
-  const handleDownloadExcel = async () => {
-    try {
-      const blob = await downloadExcel();
-
-      // Usa FileSaver.js para guardar el blob como un archivo
-      saveAs(blob, "productos_etex.xlsx");
-
-      console.log("Descarga exitosa");
-    } catch (error) {
-      console.error("Error al llamar al servidor:", error);
-    }
-  };
-
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -55,21 +38,6 @@ const Dashboard: React.FC = () => {
     <>
       <NavBar />
       <Container maxWidth="sm" style={{ textAlign: "center" }}></Container>
-      {/* 
-      <Box sx={{ display: "flex" }}>
-        <EtexButton
-          onClick={handleRunScript}
-          text="Ejecutar Script"
-        ></EtexButton>
-        <EtexButton
-          onClick={handleDownloadExcel}
-          text="Descargar Documento"
-        ></EtexButton>
-      </Box> */}
-
-      <br />
-      <br />
-      <br />
       <div className="disclaimer">
         <Alert severity="info">
           *Disclaimer: Esta herramienta es de uso exclusivo de colaboradores
@@ -80,7 +48,6 @@ const Dashboard: React.FC = () => {
         </Alert>
       </div>
       <Footer />
-      <img src="Etex_Logo.png" alt="Etex Logo" className="etex-logo" />
     </>
   );
 };
