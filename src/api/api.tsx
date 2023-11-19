@@ -12,7 +12,12 @@ interface Product {
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
-    const response = await fetch(`${BASE_URL}/product`);
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const response = await fetch(`${BASE_URL}/product`, {
+      headers: myHeaders,
+    });
     const data = await response.json();
     const products: Product[] = data.map((item: any) => ({
       _id: item._id,
@@ -26,7 +31,6 @@ export const fetchProducts = async (): Promise<Product[]> => {
       presence: item.presence,
       price: item.price,
     }));
-    console.log("Respuesta del servidor:", products);
     return products;
   } catch (error) {
     console.error("Error al llamar al servidor:", error);
@@ -36,9 +40,13 @@ export const fetchProducts = async (): Promise<Product[]> => {
 
 export const runScript = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/ejecutar-script`);
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const response = await fetch(`${BASE_URL}/ejecutar-script`, {
+      headers: myHeaders,
+    });
     const data = await response.json();
-    console.log("Respuesta del servidor:", data);
   } catch (error) {
     console.error("Error al llamar al servidor:", error);
   }
@@ -46,7 +54,12 @@ export const runScript = async () => {
 
 export const downloadExcel = async (): Promise<Blob> => {
   try {
-    const response = await fetch(`${BASE_URL}/download-excel`);
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const response = await fetch(`${BASE_URL}/download-excel`, {
+      headers: myHeaders,
+    });
 
     if (response.ok) {
       // Convierte la respuesta a un blob (formato binario)
@@ -60,3 +73,64 @@ export const downloadExcel = async (): Promise<Blob> => {
     throw error;
   }
 };
+
+export const login = async (
+  formData: FormData
+): Promise<{ access_token: string }> => {
+  try {
+    const response = await fetch(`${BASE_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: formData.get("email"),
+        password: formData.get("password"),
+      }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      if (response.status === 401) {
+        throw new AuthenticationError("Credenciales incorrectas");
+      } else {
+        throw new Error(`Error al iniciar sesión: ${response.statusText}`);
+      }
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const validateToken = async () => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const req = await fetch(`${BASE_URL}/auth/check`, {
+      headers: myHeaders,
+    });
+
+    if (!req.ok) {
+      throw new Error(`Error en la solicitud: ${req.statusText}`);
+    }
+
+    const response = await req.json();
+
+    return { authenticated: response.authenticated, message: response.message };
+  } catch (error) {
+    return {
+      authenticated: false,
+      message: error,
+    };
+  }
+};
+
+export class AuthenticationError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "AuthenticationError";
+  }
+}

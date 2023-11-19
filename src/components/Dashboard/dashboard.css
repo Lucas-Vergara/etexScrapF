@@ -86,19 +86,6 @@ h1 {
   margin-bottom: 20px;
 }
 
-.MuiButton-containedPrimary {
-  background-color: var(--spanish-orange) !important; /* Fondo principal */
-  color: white !important; /* Color del texto */
-  margin: 10px !important; /* Margen entre los botones */
-  padding: 8px 16px !important; /* Relleno interno del botón */
-  border-radius: 4px !important; /* Bordes redondeados */
-  transition: background-color 0.3s ease !important; /* Transición suave al cambiar el color de fondo */
-}
-
-.MuiButton-containedPrimary:hover {
-  background-color: var(--harvest-gold) !important; /* Cambio de color al pasar el mouse */
-}
-
 /* Estilos para la entrada de SKU y el botón de filtrar */
 input {
   padding: 5px;

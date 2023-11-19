@@ -1,11 +1,12 @@
 import React from "react";
-import Dashboard from "./components/Dashboard/Dashboard";
+import { BrowserRouter } from "react-router-dom";
+import AppRoutes from "./routes/routes";
 
 const App: React.FC = () => {
   return (
-    <div>
-      <Dashboard />
-    </div>
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   );
 };
 

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Button from "@mui/material/Button";
+import React, { useState } from "react";
 import { saveAs } from "file-saver";
-import { downloadExcel, fetchProducts, runScript } from "../../api/api";
+import { downloadExcel, runScript } from "../../api/api";
 import "./dashboard.css";
-import { Container, Link, Typography } from "@mui/material";
+import { Alert, Container } from "@mui/material";
+import NavBar from "../NavBar/NavBar";
+import Footer from "../Footer/Footer";
 
 interface Product {
   _id: string;
@@ -37,80 +38,50 @@ const Dashboard: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchProducts();
-        setOriginalData(data);
-      } catch (error) {
-        throw error;
-      }
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       const data = await fetchProducts();
+  //       setOriginalData(data);
+  //     } catch (error) {
+  //       throw error;
+  //     }
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
-    <div>
-      <Container maxWidth="sm" style={{ textAlign: "center" }}>
-        <h1>Herramienta levantamiento de PVP</h1>
-      </Container>
-      <Button variant="contained" onClick={handleRunScript}>
-        Ejecutar Script
-      </Button>
-      <br />
-      <Button variant="contained" onClick={handleDownloadExcel}>
-        Descargar Documento
-      </Button>
+    <>
+      <NavBar />
+      <Container maxWidth="sm" style={{ textAlign: "center" }}></Container>
+      {/* 
+      <Box sx={{ display: "flex" }}>
+        <EtexButton
+          onClick={handleRunScript}
+          text="Ejecutar Script"
+        ></EtexButton>
+        <EtexButton
+          onClick={handleDownloadExcel}
+          text="Descargar Documento"
+        ></EtexButton>
+      </Box> */}
+
       <br />
       <br />
       <br />
       <div className="disclaimer">
-        <div>
+        <Alert severity="info">
           *Disclaimer: Esta herramienta es de uso exclusivo de colaboradores
           designados de Etex Chile para visualizar el levantamiento de precios a
-          la venta al público (PVP).
-        </div>
-        <div>
-          Toda la información recogida en esta plataforma es de acceso público a
-          través de las distintas páginas web disponibles de nuestros
-          distribuidores.
-        </div>
+          la venta al público (PVP). Toda la información recogida en esta
+          plataforma es de acceso público a través de las distintas páginas web
+          disponibles de nuestros distribuidores.
+        </Alert>
       </div>
-      <footer>
-        <div className="footer-container">
-          <div className="footer-shape left-square"></div>
-          <div className="footer-shape left-shape"></div>
-          <Container maxWidth="sm" style={{ textAlign: "center" }}>
-            <Typography
-              variant="body2"
-              style={{
-                paddingTop: "18px",
-                fontStyle: "italic",
-                color: "#FFFFE1",
-              }}
-            >
-              Desarrollado por{" "}
-              <Link
-                href="https://www.linkedin.com/in/lucas-vergara-78a8891b5/"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "#FFEEAF",
-                  textDecoration: "none",
-                }}
-              >
-                Lucas Vergara
-              </Link>
-            </Typography>
-          </Container>
-
-          <div className="footer-shape right-shape"></div>
-          <div className="footer-shape right-square"></div>
-        </div>
-      </footer>
+      <Footer />
       <img src="Etex_Logo.png" alt="Etex Logo" className="etex-logo" />
-    </div>
+    </>
   );
 };
 
