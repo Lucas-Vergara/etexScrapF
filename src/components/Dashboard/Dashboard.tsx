@@ -1,43 +1,15 @@
-import React, { useState } from "react";
-import { saveAs } from "file-saver";
-import { downloadExcel, runScript } from "../../api/api";
+import React from "react";
 import "./dashboard.css";
-import { Alert, Container } from "@mui/material";
+import { Alert } from "@mui/material";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
-
-interface Product {
-  _id: string;
-  name: string;
-  brand: string;
-  distributor: string;
-  sku: string;
-  price: number;
-  date: string;
-}
+import PivotTable from "../PivotTable/PivotTable";
 
 const Dashboard: React.FC = () => {
-  const [originalData, setOriginalData] = useState<Product[] | undefined>(
-    undefined
-  );
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await fetchProducts();
-  //       setOriginalData(data);
-  //     } catch (error) {
-  //       throw error;
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
   return (
     <>
       <NavBar />
-      <Container maxWidth="sm" style={{ textAlign: "center" }}></Container>
+      <PivotTable />
       <div className="disclaimer">
         <Alert severity="info">
           *Disclaimer: Esta herramienta es de uso exclusivo de colaboradores
