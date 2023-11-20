@@ -7,8 +7,23 @@ import createPlotlyRenderers from "react-pivottable/PlotlyRenderers";
 import { fetchProducts } from "../../api/api";
 import { Product } from "../../types/types";
 import { getMonthName } from "./getMonthName";
+import html2canvas from "html2canvas";
 
 const PlotlyRenderers = createPlotlyRenderers(Plot);
+
+const handleDownload = () => {
+  const element = document.getElementById("pivottable") as HTMLDivElement;
+  if (element) {
+    html2canvas(element).then((canvas) => {
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL();
+      link.download = "tablaPVP.png";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+};
 
 const PivotTable = (props: any) => {
   const [state, setState] = useState(props);
@@ -35,6 +50,8 @@ const PivotTable = (props: any) => {
     return <div>Cargando Tabla Dinámica...</div>;
   }
 
+  console.log(originalData);
+
   const transformedData = originalData.map((product) => [
     product.date,
     product.day,
@@ -44,6 +61,7 @@ const PivotTable = (props: any) => {
     product.brand,
     product.name,
     product.price?.toString(),
+    product.region,
   ]);
 
   transformedData.unshift([
@@ -55,16 +73,20 @@ const PivotTable = (props: any) => {
     "Marca",
     "Producto",
     "Precio",
+    "Región",
   ]);
 
   return (
     <>
-      <PivotTableUI
-        data={transformedData}
-        onChange={(s) => setState(s)}
-        renderers={Object.assign({}, TableRenderers, PlotlyRenderers)}
-        {...state}
-      />
+      <button onClick={handleDownload}>Descargar Imagen</button>
+      <div id="pivottable">
+        <PivotTableUI
+          data={transformedData}
+          onChange={(s) => setState(s)}
+          renderers={Object.assign({}, TableRenderers, PlotlyRenderers)}
+          {...state}
+        />
+      </div>
     </>
   );
 };

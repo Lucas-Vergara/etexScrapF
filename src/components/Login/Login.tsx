@@ -23,8 +23,6 @@ export default function SignIn() {
       setShake(false);
       const response = await login(formData);
       const access_token = response.access_token;
-      console.log(response);
-
       localStorage.setItem("access_token", access_token);
       navigate("/");
     } catch (error) {

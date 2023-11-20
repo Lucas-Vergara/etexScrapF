@@ -24,6 +24,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
       sku: item.sku,
       presence: item.presence,
       price: item.price,
+      region: item.region,
     }));
     return products;
   } catch (error) {

@@ -9,4 +9,5 @@ export interface Product {
   day: string;
   month: string;
   year: string;
+  region: string;
 }
