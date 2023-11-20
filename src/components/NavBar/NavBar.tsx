@@ -31,7 +31,7 @@ export default function NavBar() {
         position="static"
         sx={{
           backgroundColor: "white",
-          boxShadow: "0px 0px 10px 0px lightgray",
+          boxShadow: "0px 0px 10px 0px orange",
         }}
       >
         <Toolbar>

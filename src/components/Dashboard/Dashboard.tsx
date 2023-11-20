@@ -9,6 +9,7 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <NavBar />
+      <br />
       <PivotTable
         title="prueba"
         cols={["Fecha"]}
@@ -16,6 +17,11 @@ const Dashboard: React.FC = () => {
         vals={["Precio"]}
         aggregatorName="Average"
       />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <div className="disclaimer">
         <Alert severity="info">
           *Disclaimer: Esta herramienta es de uso exclusivo de colaboradores

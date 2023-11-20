@@ -1,5 +1,5 @@
 footer {
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -20,35 +20,35 @@ footer {
 }
 
 .left-square {
-  height: 50px;
+  height: 30px;
   left: 0; 
   background: var(--dark-orange);
 }
 
 .left-shape {
-  height: 50px;
+  height: 30px;
   left: 60px;
   background: var(--dark-orange);
   clip-path: polygon(0% 0%, 100% 100%, 0% 100%); /* Forma de rombo */
 }
 
 .right-square {
-  height: 150px;
-  right: 0; 
+  height: 30px;
+  width: 70px;
+  right: -30px; 
   background: var(--harvest-gold);
-  clip-path: polygon(0% 0%, 100% 0%, 0% 100%); /* Forma de rombo con diagonal hacia la izquierda */
 }
 
 .right-shape {
-  clip-path: polygon(100% -90%, 0% 100%, 100% 100%);
-  height: 50px;
+  clip-path: polygon(100% -170%, 0% 100%, 100% 100%);
+  height: 30px;
   right: 30px;
   background: var(--harvest-gold);
 }
 
 .etex-logo {
-  position: fixed;
-  bottom: -5px;
+  position: absolute;
+  bottom: 0px;
   right: 0;
-  height: 70px;
+  height: 60px;
 }

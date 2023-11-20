@@ -17,9 +17,9 @@
 }
 
 .disclaimer {
-  position: fixed;
+  position: absolute;
   bottom: 30px;
-  padding-right: 171px;
+  padding-right: 148px;
   left: 0;
 }
 
