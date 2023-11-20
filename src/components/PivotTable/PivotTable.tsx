@@ -5,18 +5,10 @@ import TableRenderers from "react-pivottable/TableRenderers";
 import Plot from "react-plotly.js";
 import createPlotlyRenderers from "react-pivottable/PlotlyRenderers";
 import { fetchProducts } from "../../api/api";
+import { Product } from "../../types/types";
+import { getMonthName } from "./getMonthName";
 
 const PlotlyRenderers = createPlotlyRenderers(Plot);
-
-interface Product {
-  _id: string;
-  name: string;
-  brand: string;
-  distributor: string;
-  sku: string;
-  price: number;
-  date: string;
-}
 
 const PivotTable = (props: any) => {
   const [state, setState] = useState(props);
@@ -45,6 +37,9 @@ const PivotTable = (props: any) => {
 
   const transformedData = originalData.map((product) => [
     product.date,
+    product.day,
+    getMonthName(parseInt(product.month)),
+    product.year,
     product.distributor,
     product.brand,
     product.name,
@@ -53,6 +48,9 @@ const PivotTable = (props: any) => {
 
   transformedData.unshift([
     "Fecha",
+    "Día",
+    "Mes",
+    "Año",
     "Distribuidor",
     "Marca",
     "Producto",

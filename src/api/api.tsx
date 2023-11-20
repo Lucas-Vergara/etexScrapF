@@ -1,14 +1,6 @@
-const BASE_URL = process.env.REACT_APP_BASE_URL;
+import { Product } from "../types/types";
 
-interface Product {
-  _id: string;
-  name: string;
-  brand: string;
-  distributor: string;
-  sku: string;
-  price: number;
-  date: string;
-}
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
@@ -22,7 +14,9 @@ export const fetchProducts = async (): Promise<Product[]> => {
     const products: Product[] = data.map((item: any) => ({
       _id: item._id,
       date: item.date,
-      hour: item.hour,
+      day: item.day,
+      month: item.month,
+      year: item.year,
       name: item.name,
       brand: item.brand,
       distributor: item.distributor,

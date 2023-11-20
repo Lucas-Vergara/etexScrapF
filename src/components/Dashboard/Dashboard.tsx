@@ -9,10 +9,9 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <NavBar />
-      <br />
       <PivotTable
         title="prueba"
-        cols={["Fecha"]}
+        cols={["Mes", "Día"]}
         rows={["Distribuidor", "Marca", "Producto"]}
         vals={["Precio"]}
         aggregatorName="Average"
