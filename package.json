@@ -17,9 +17,11 @@
     "chart.js": "^4.4.0",
     "dotenv": "^16.3.1",
     "file-saver": "^2.0.5",
+    "plotly.js": "^2.27.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-pivottable": "^0.11.0",
+    "react-plotly.js": "^2.6.0",
     "react-router-dom": "^6.19.0",
     "react-scripts": "5.0.1",
     "sass": "^1.69.5",
@@ -55,6 +57,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/file-saver": "^2.0.6",
     "@types/react-pivottable": "^0.11.5",
+    "@types/react-plotly.js": "^2.6.3",
     "nodemon": "^3.0.1"
   }
 }

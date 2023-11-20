@@ -9,7 +9,13 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <NavBar />
-      <PivotTable />
+      <PivotTable
+        title="prueba"
+        cols={["Fecha"]}
+        rows={["Distribuidor", "Marca", "Producto"]}
+        vals={["Precio"]}
+        aggregatorName="Average"
+      />
       <div className="disclaimer">
         <Alert severity="info">
           *Disclaimer: Esta herramienta es de uso exclusivo de colaboradores
