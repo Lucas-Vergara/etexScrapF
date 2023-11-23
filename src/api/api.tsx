@@ -20,6 +20,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
       name: item.name,
       brand: item.brand,
       distributor: item.distributor,
+      category: item.category,
       web_title: item.web_title,
       sku: item.sku,
       presence: item.presence,
