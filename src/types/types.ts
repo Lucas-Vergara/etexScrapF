@@ -12,3 +12,14 @@ export interface Product {
   year: string;
   region: string;
 }
+
+export interface ScrapingTracker {
+  status: "completed",
+  started: "2023-11-24T07:21:19.628Z",
+  completed: "2023-11-24T07:35:50.943Z",
+  progress: "finished",
+  initiator: "Servidor",
+  errorMessage: null,
+  missingProducts: [],
+  productsAmount: 211,
+}

@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PivotTableUI from "react-pivottable/PivotTableUI";
 import "react-pivottable/pivottable.css";
 import TableRenderers from "react-pivottable/TableRenderers";
 import Plot from "react-plotly.js";
 import createPlotlyRenderers from "react-pivottable/PlotlyRenderers";
-import { fetchProducts } from "../../api/api";
 import { Product } from "../../types/types";
 import { getMonthName } from "./getMonthName";
 import html2canvas from "html2canvas";
+import { useScrapingStore } from "../../store/zustand";
+import formatCells from "./formatCells";
 
 const PlotlyRenderers = createPlotlyRenderers(Plot);
 
@@ -28,29 +29,28 @@ const handleDownload = () => {
 const PivotTable = (props: any) => {
   const [state, setState] = useState(props);
   const [originalData, setOriginalData] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { products, isLoading } = useScrapingStore();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchProducts();
+        const data = products;
         setOriginalData(data);
       } catch (error) {
         throw error;
-      } finally {
-        setLoading(false); // Marca la carga como completa, independientemente de si fue exitosa o no
       }
     };
 
     fetchData();
-  }, []);
+  }, [products]);
 
-  if (loading) {
-    // Muestra un indicador de carga mientras se obtienen los datos
+  useEffect(() => {
+    formatCells();
+  }, [state]);
+
+  if (isLoading) {
     return <div>Cargando Tabla Dinámica...</div>;
   }
-
-  console.log(originalData);
 
   const transformedData = originalData.map((product) => [
     product.date,
@@ -77,6 +77,8 @@ const PivotTable = (props: any) => {
     "Precio",
     "Región",
   ]);
+
+  formatCells();
 
   return (
     <>

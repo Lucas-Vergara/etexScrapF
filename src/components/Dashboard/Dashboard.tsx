@@ -4,17 +4,21 @@ import { Alert } from "@mui/material";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import PivotTable from "../PivotTable/PivotTable";
+import formatCells from "../PivotTable/formatCells";
 
 const Dashboard: React.FC = () => {
+  setTimeout(() => {
+    formatCells();
+  }, 100); // 1000 milisegundos = 1 segundo
   return (
     <>
       <NavBar />
       <PivotTable
-        title="prueba"
         cols={["Mes", "Día"]}
         rows={["Categoría", "Producto", "Distribuidor", "Marca"]}
         vals={["Precio"]}
-        aggregatorName="Median"
+        aggregatorName="Average"
+        filename="Herramienta levantamiento de PVP"
       />
       <br />
       <br />

@@ -13,8 +13,6 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
     const checkAuthentication = async () => {
       try {
         const response = await validateToken();
-        console.log();
-
         if (response.authenticated) {
           setIsAuthenticated(true);
         } else {

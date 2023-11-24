@@ -34,6 +34,37 @@ export const fetchProducts = async (): Promise<Product[]> => {
   }
 };
 
+export const fetchScrapingTracker = async () => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const response = await fetch(`${BASE_URL}/last-tracker`, {
+      headers: myHeaders,
+    });
+    return await response.json();
+  } catch (error) {
+    console.error("Error al llamar al servidor:", error);
+    throw error;
+  }
+};
+
+export const fetchMissingProducts = async () => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const response = await fetch(`${BASE_URL}/recent-missing-products`, {
+      headers: myHeaders,
+    });
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    console.error("Error al llamar al servidor:", error);
+    throw error;
+  }
+};
+
 export const runScript = async () => {
   try {
     const accessToken = localStorage.getItem("access_token");
@@ -42,7 +73,7 @@ export const runScript = async () => {
     const response = await fetch(`${BASE_URL}/ejecutar-script`, {
       headers: myHeaders,
     });
-    const data = await response.json();
+    await response.json();
   } catch (error) {
     console.error("Error al llamar al servidor:", error);
   }
