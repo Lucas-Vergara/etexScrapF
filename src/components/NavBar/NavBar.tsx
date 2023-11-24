@@ -4,13 +4,12 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import EtexButton from "../Button/EtexButton";
-import { downloadExcel, runScript } from "../../api/api";
+import { downloadExcel } from "../../api/api";
 import { saveAs } from "file-saver";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
-  const handleRunScript = async () => {
-    runScript();
-  };
+  const navigate = useNavigate();
 
   const handleDownloadExcel = async () => {
     try {
@@ -25,6 +24,14 @@ export default function NavBar() {
     }
   };
 
+  const handleServiceInfoClick = () => {
+    navigate("/serviceInfo");
+  };
+
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   return (
     <Box sx={{ flexGrow: 1, pb: 2 }}>
       <AppBar
@@ -35,7 +42,10 @@ export default function NavBar() {
         }}
       >
         <Toolbar>
-          <div style={{ flexGrow: 1 }}>
+          <div
+            style={{ flexGrow: 1, cursor: "pointer" }}
+            onClick={handleLogoClick}
+          >
             <img src="/favicon.ico" alt="" style={{ height: "35px" }} />
           </div>
           <Typography
@@ -47,9 +57,9 @@ export default function NavBar() {
           </Typography>
           <Box sx={{ display: "flex" }}>
             <EtexButton
-              onClick={handleRunScript}
-              text="Ejecutar Script"
-            ></EtexButton>
+              text="Servicio de Scraping"
+              onClick={handleServiceInfoClick}
+            />
             <EtexButton
               onClick={handleDownloadExcel}
               text="Descargar Documento"

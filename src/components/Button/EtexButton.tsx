@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@mui/material/Button";
 
 interface DashboardProps {
-  onClick: () => void;
+  onClick: any;
   text: string;
 }
 
@@ -15,12 +15,12 @@ const EtexButton: React.FC<DashboardProps> = (props) => {
       sx={{
         textTransform: "none",
         fontWeight: "bold",
-        backgroundColor: " rgba(220, 97, 6, 1)",
+        backgroundColor: "#f57c00",
         color: "whitesmoke",
         margin: "10px",
         borderRadius: "4px",
         "&:hover": {
-          backgroundColor: "rgba(242, 121, 53)",
+          backgroundColor: "rgba(222, 97, 6, 1)",
         },
       }}
     >

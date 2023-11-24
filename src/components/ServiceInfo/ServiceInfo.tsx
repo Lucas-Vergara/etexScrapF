@@ -2,8 +2,14 @@ import { Box, Container } from "@mui/material";
 import React from "react";
 import AppWidgetSummary from "../AppWidgetSummary/AppWidgetSummary";
 import NavBar from "../NavBar/NavBar";
+import EtexButton from "../Button/EtexButton";
+import { runScript } from "../../api/api";
 
 function ServiceInfo() {
+  const handleRunScript = async () => {
+    runScript();
+  };
+
   return (
     <body style={{ backgroundColor: "#f9fafb" }}>
       <NavBar />
@@ -44,6 +50,10 @@ function ServiceInfo() {
             <img alt="icon" src="/assets/icons/glass/ic_glass_message.png" />
           }
         />
+        <EtexButton
+          onClick={handleRunScript}
+          text="Ejecutar Script"
+        ></EtexButton>
       </Container>
     </body>
   );
