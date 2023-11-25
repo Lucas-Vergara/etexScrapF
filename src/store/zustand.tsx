@@ -17,6 +17,8 @@ interface ProductState {
   fetchScrapingTracker: () => Promise<void>;
   missingProducts: string[] | null;
   fetchMissingProducts: () => Promise<void>;
+  authenticated: boolean | null;
+  setAuthenticated: (value: boolean) => void;
 }
 
 export const useScrapingStore = create<ProductState>()(
@@ -29,16 +31,19 @@ export const useScrapingStore = create<ProductState>()(
         productsAmount: 0,
         scrapingTracker: null,
         missingProducts: null,
+        authenticated: null,
+        setAuthenticated: (value) => set({ authenticated: value }),
         fetchProducts: async () => {
           try {
             set({ isLoading: true, error: null });
             const products = await fetchProducts();
-            const productsAmount = products.length; // Cuenta los productos
+            const productsAmount = products.length;
             set({ products, isLoading: false, productsAmount });
           } catch (error) {
             set({ error, isLoading: false });
           }
         },
+
         fetchScrapingTracker: async () => {
           try {
             const scrapingTracker = await fetchScrapingTracker();

@@ -23,13 +23,11 @@ import NavBar from "../NavBar/NavBar";
 import EtexButton from "../Button/EtexButton";
 import { runScript } from "../../api/api";
 import { useScrapingStore } from "../../store/zustand";
-import { useNavigate } from "react-router";
 
 function ServiceInfo() {
   const { scrapingTracker, isLoading, missingProducts } = useScrapingStore();
   const [open, setOpen] = useState(false);
-
-  const navigate = useNavigate();
+  const [running, setRunning] = useState(!scrapingTracker?.completed);
 
   const handleOpen = () => {
     setOpen(true);
@@ -46,7 +44,7 @@ function ServiceInfo() {
   const handleConfirm = () => {
     runScript();
     handleClose();
-    navigate("/serviceInfo");
+    setRunning(true);
   };
 
   if (isLoading) {
@@ -94,7 +92,7 @@ function ServiceInfo() {
           spacing={3}
           sx={{
             position: "relative",
-            boxShadow: (theme) =>
+            boxShadow: () =>
               scrapingTracker?.completed
                 ? "0 0 2px 0 rgba(145, 158, 171, 0.08), 0 12px 24px -4px rgba(145, 158, 171, 0.08)"
                 : "0 0 2px 0 rgba(145, 158, 171, 0.08)",
@@ -106,7 +104,7 @@ function ServiceInfo() {
             my: 0,
           }}
         >
-          {!scrapingTracker?.completed && (
+          {running && (
             <>
               <CircularProgress
                 disableShrink
@@ -158,9 +156,7 @@ function ServiceInfo() {
                     Horario de Termino
                   </TableCell>
                   <TableCell align="left">
-                    {scrapingTracker?.completed
-                      ? completedTime
-                      : "en ejecución"}
+                    {running ? "en ejecución" : completedTime}
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -182,7 +178,7 @@ function ServiceInfo() {
               </TableBody>
             </Table>
           </TableContainer>
-          {scrapingTracker?.completed && (
+          {!running && (
             <EtexButton
               onClick={handleRunScript}
               text="Ejecutar Proceso de Scraping"

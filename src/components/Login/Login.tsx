@@ -10,11 +10,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { AuthenticationError, login } from "../../api/api";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
+import { useScrapingStore } from "../../store/zustand";
 
 export default function SignIn() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState("");
   const [shake, setShake] = React.useState(false);
+  const { setAuthenticated } = useScrapingStore();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -24,6 +26,7 @@ export default function SignIn() {
       const response = await login(formData);
       const access_token = response.access_token;
       localStorage.setItem("access_token", access_token);
+      setAuthenticated(true);
       navigate("/");
     } catch (error) {
       if (error instanceof AuthenticationError) {
