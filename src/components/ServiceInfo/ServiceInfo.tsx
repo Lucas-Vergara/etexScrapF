@@ -58,11 +58,19 @@ function ServiceInfo() {
   // const day = startDate?.toLocaleDateString();
 
   return (
-    <div style={{ backgroundColor: "#f9fafb", minHeight: "100vh" }}>
+    <div
+      style={{
+        backgroundColor: "#f9fafb",
+        minHeight: "100vh",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <NavBar />
-      <Container maxWidth="xl" sx={{ pt: 4 }}>
+      <Container>
         <Box
           sx={{
+            marginTop: "-20px",
             display: "flex",
           }}
         >
@@ -97,8 +105,9 @@ function ServiceInfo() {
                 ? "0 0 2px 0 rgba(145, 158, 171, 0.08), 0 12px 24px -4px rgba(145, 158, 171, 0.08)"
                 : "0 0 2px 0 rgba(145, 158, 171, 0.08)",
             margin: "50px",
-            px: 3,
+            px: 8,
             py: 5,
+
             borderRadius: "16px",
             maxWidth: "800px",
             my: 0,

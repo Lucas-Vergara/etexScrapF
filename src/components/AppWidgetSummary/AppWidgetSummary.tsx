@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-import { Card, Grow, Stack, Typography } from "@mui/material";
+import { Card, Grow, Stack, Typography, Box } from "@mui/material";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
@@ -25,41 +25,38 @@ export default function AppWidgetSummary(props: any) {
           borderRadius: "16px",
         }}
       >
-        {icon === "inventory" && (
-          <Inventory2Icon
-            sx={{ color: "teal", paddingTop: "15px" }}
-            fontSize="large"
-          />
-        )}
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          <Box sx={{ display: "flex" }}>
+            {icon === "inventory" && (
+              <Inventory2Icon sx={{ color: "teal", fontSize: "3rem" }} />
+            )}
 
-        {icon === "error" && (
-          <ErrorOutlineIcon
-            sx={{ color: "red", paddingTop: "15px" }}
-            fontSize="large"
-          />
-        )}
+            {icon === "error" && (
+              <ErrorOutlineIcon sx={{ color: "red", fontSize: "3rem" }} />
+            )}
 
-        {icon === "success" && (
-          <CheckCircleOutlineIcon
-            sx={{ color: "teal", paddingTop: "15px" }}
-            fontSize="large"
-          />
-        )}
+            {icon === "success" && (
+              <CheckCircleOutlineIcon
+                sx={{ color: "teal", fontSize: "3rem" }}
+              />
+            )}
 
-        {icon === "robot" && (
-          <SmartToyIcon
-            sx={{ color: "teal", paddingTop: "15px" }}
-            fontSize="large"
-          />
-        )}
+            {icon === "robot" && (
+              <SmartToyIcon sx={{ color: "teal", fontSize: "3rem" }} />
+            )}
 
-        <Stack spacing={0.5}>
-          <Typography variant="h4">{total}</Typography>
-
-          <Typography variant="subtitle2" sx={{ color: "text.disabled" }}>
+            <Typography variant="h4" pl={5}>
+              {total}
+            </Typography>
+          </Box>
+          <Typography
+            variant="subtitle2"
+            pt={2}
+            sx={{ color: "text.disabled" }}
+          >
             {title}
           </Typography>
-        </Stack>
+        </Box>
       </Card>
     </Grow>
   );

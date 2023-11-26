@@ -56,10 +56,7 @@ export default function NavBar() {
             Herramienta levantamiento de PVP
           </Typography>
           <Box sx={{ display: "flex" }}>
-            <EtexButton
-              text="Servicio de Scraping"
-              onClick={handleServiceInfoClick}
-            />
+            <EtexButton text="Info" onClick={handleServiceInfoClick} />
             <EtexButton
               onClick={handleDownloadExcel}
               text="Descargar Documento"
