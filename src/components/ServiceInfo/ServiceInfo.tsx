@@ -25,7 +25,12 @@ import { runScript } from "../../api/api";
 import { useScrapingStore } from "../../store/zustand";
 
 function ServiceInfo() {
-  const { scrapingTracker, isLoading, missingProducts } = useScrapingStore();
+  const {
+    scrapingTracker,
+    isLoading,
+    dailyMissingProducts,
+    monthlyMissingProducts,
+  } = useScrapingStore();
   const [open, setOpen] = useState(false);
   const [running, setRunning] = useState(!scrapingTracker?.completed);
 
@@ -81,7 +86,7 @@ function ServiceInfo() {
           />
           <AppWidgetSummary
             title="Productos ausentes hoy"
-            total={scrapingTracker?.missingProducts?.length}
+            total={dailyMissingProducts?.length}
             icon={
               scrapingTracker?.missingProducts?.length ? "error" : "success"
             }
@@ -89,8 +94,8 @@ function ServiceInfo() {
           />
           <AppWidgetSummary
             title="Productos ausentes en los últimos 30 días"
-            total={missingProducts?.length}
-            icon={missingProducts?.length ? "error" : "success"}
+            total={monthlyMissingProducts?.length}
+            icon={monthlyMissingProducts?.length ? "error" : "success"}
             timeout={2000}
           />
         </Box>

@@ -24,7 +24,7 @@ export const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
         setAuthenticated(false);
       }
     };
-    !authenticated && checkAuthentication();
+    checkAuthentication();
   }, [authenticated, setAuthenticated]);
 
   if (authenticated === null) {

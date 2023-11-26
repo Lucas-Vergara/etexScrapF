@@ -49,12 +49,28 @@ export const fetchScrapingTracker = async () => {
   }
 };
 
-export const fetchMissingProducts = async () => {
+export const fetchDailyMissingProducts = async () => {
   try {
     const accessToken = localStorage.getItem("access_token");
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${accessToken}`);
-    const response = await fetch(`${BASE_URL}/recent-missing-products`, {
+    const response = await fetch(`${BASE_URL}/daily-missing-products`, {
+      headers: myHeaders,
+    });
+    const res = await response.json();
+    return res;
+  } catch (error) {
+    console.error("Error al llamar al servidor:", error);
+    throw error;
+  }
+};
+
+export const fetchMonthlyMissingProducts = async () => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const response = await fetch(`${BASE_URL}/monthly-missing-products`, {
       headers: myHeaders,
     });
     const res = await response.json();

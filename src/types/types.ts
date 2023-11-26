@@ -23,3 +23,13 @@ export interface ScrapingTracker {
   missingProducts: [],
   productsAmount: 211,
 }
+
+export interface MonthlyMissingProducts {
+  day: string;
+  missingProducts: DailyMissingProducts[]
+}
+
+export interface DailyMissingProducts {
+  product: string;
+  product_url: string;
+}

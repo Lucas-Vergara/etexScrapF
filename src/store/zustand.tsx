@@ -1,10 +1,16 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { Product, ScrapingTracker } from "../types/types";
+import {
+  DailyMissingProducts,
+  MonthlyMissingProducts,
+  Product,
+  ScrapingTracker,
+} from "../types/types";
 import {
   fetchProducts,
   fetchScrapingTracker,
-  fetchMissingProducts,
+  fetchDailyMissingProducts,
+  fetchMonthlyMissingProducts,
 } from "../api/api";
 
 interface ProductState {
@@ -15,10 +21,12 @@ interface ProductState {
   productsAmount: number;
   scrapingTracker: ScrapingTracker | null;
   fetchScrapingTracker: () => Promise<void>;
-  missingProducts: string[] | null;
-  fetchMissingProducts: () => Promise<void>;
-  authenticated: boolean | null;
+  fetchDailyMissingProducts: () => Promise<void>;
+  dailyMissingProducts: DailyMissingProducts[];
+  fetchMonthlyMissingProducts: () => Promise<void>;
+  monthlyMissingProducts: MonthlyMissingProducts[];
   setAuthenticated: (value: boolean) => void;
+  authenticated: boolean | null;
 }
 
 export const useScrapingStore = create<ProductState>()(
@@ -30,7 +38,8 @@ export const useScrapingStore = create<ProductState>()(
         error: null,
         productsAmount: 0,
         scrapingTracker: null,
-        missingProducts: null,
+        dailyMissingProducts: [],
+        monthlyMissingProducts: [],
         authenticated: null,
         setAuthenticated: (value) => set({ authenticated: value }),
         fetchProducts: async () => {
@@ -50,10 +59,16 @@ export const useScrapingStore = create<ProductState>()(
             set({ scrapingTracker });
           } catch (error) {}
         },
-        fetchMissingProducts: async () => {
+        fetchDailyMissingProducts: async () => {
           try {
-            const missingProducts = await fetchMissingProducts();
-            set({ missingProducts });
+            const dailyMissingProducts = await fetchDailyMissingProducts();
+            set({ dailyMissingProducts });
+          } catch (error) {}
+        },
+        fetchMonthlyMissingProducts: async () => {
+          try {
+            const monthlyMissingProducts = await fetchMonthlyMissingProducts();
+            set({ monthlyMissingProducts });
           } catch (error) {}
         },
       }),

@@ -7,7 +7,8 @@ const App: React.FC = () => {
   const {
     fetchProducts,
     fetchScrapingTracker,
-    fetchMissingProducts,
+    fetchMonthlyMissingProducts,
+    fetchDailyMissingProducts,
     authenticated,
   } = useScrapingStore();
 
@@ -15,9 +16,16 @@ const App: React.FC = () => {
     if (authenticated) {
       fetchProducts();
       fetchScrapingTracker();
-      fetchMissingProducts();
+      fetchMonthlyMissingProducts();
+      fetchDailyMissingProducts();
     }
-  }, [authenticated]);
+  }, [
+    authenticated,
+    fetchProducts,
+    fetchScrapingTracker,
+    fetchMonthlyMissingProducts,
+    fetchDailyMissingProducts,
+  ]);
 
   return (
     <BrowserRouter>
