@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/routes";
-import { useScrapingStore } from "./store/zustand";
+import { useProductStore } from "./store/ProductStore";
+import { useUserStore } from "./store/UserStore";
 
 const App: React.FC = () => {
   const {
@@ -9,8 +10,9 @@ const App: React.FC = () => {
     fetchScrapingTracker,
     fetchMonthlyMissingProducts,
     fetchDailyMissingProducts,
-    authenticated,
-  } = useScrapingStore();
+  } = useProductStore();
+
+  const { authenticated, fetchUsers } = useUserStore();
 
   useEffect(() => {
     if (authenticated) {
@@ -18,6 +20,7 @@ const App: React.FC = () => {
       fetchScrapingTracker();
       fetchMonthlyMissingProducts();
       fetchDailyMissingProducts();
+      fetchUsers();
     }
   }, [
     authenticated,
@@ -25,6 +28,7 @@ const App: React.FC = () => {
     fetchScrapingTracker,
     fetchMonthlyMissingProducts,
     fetchDailyMissingProducts,
+    fetchUsers,
   ]);
 
   return (

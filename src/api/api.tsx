@@ -171,6 +171,73 @@ export const validateToken = async () => {
   }
 };
 
+export const register = async (
+  formData: FormData
+): Promise<{
+  email: string;
+  password: string;
+  _id: string;
+  __v: number;
+}> => {
+  try {
+    const response = await fetch(`${BASE_URL}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: formData.get("email"),
+        password: formData.get("password"),
+      }),
+    });
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error(`${response.statusText}`);
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteUser = async (userId: string): Promise<any> => {
+  try {
+    const response = await fetch(`${BASE_URL}/users/${userId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        // Puedes incluir tokens de autenticación u otros encabezados si es necesario
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`${response.statusText}`);
+    }
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const fetchUsers = async (): Promise<
+  { id: string; email: string }[]
+> => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const response = await fetch(`${BASE_URL}/users`, {
+      headers: myHeaders,
+    });
+    const users = await response.json();
+    return users;
+  } catch (error) {
+    console.error("Error al llamar al servidor:", error);
+    throw error;
+  }
+};
+
 export class AuthenticationError extends Error {
   constructor(message: string) {
     super(message);

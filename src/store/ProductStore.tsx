@@ -25,11 +25,9 @@ interface ProductState {
   dailyMissingProducts: DailyMissingProducts[];
   fetchMonthlyMissingProducts: () => Promise<void>;
   monthlyMissingProducts: MonthlyMissingProducts[];
-  setAuthenticated: (value: boolean) => void;
-  authenticated: boolean | null;
 }
 
-export const useScrapingStore = create<ProductState>()(
+export const useProductStore = create<ProductState>()(
   devtools(
     persist(
       (set) => ({
@@ -40,8 +38,6 @@ export const useScrapingStore = create<ProductState>()(
         scrapingTracker: null,
         dailyMissingProducts: [],
         monthlyMissingProducts: [],
-        authenticated: null,
-        setAuthenticated: (value) => set({ authenticated: value }),
         fetchProducts: async () => {
           try {
             set({ isLoading: true, error: null });
@@ -52,7 +48,6 @@ export const useScrapingStore = create<ProductState>()(
             set({ error, isLoading: false });
           }
         },
-
         fetchScrapingTracker: async () => {
           try {
             const scrapingTracker = await fetchScrapingTracker();
@@ -72,7 +67,7 @@ export const useScrapingStore = create<ProductState>()(
           } catch (error) {}
         },
       }),
-      { name: "scrapingServiceStore" }
+      { name: "productStore" }
     )
   )
 );

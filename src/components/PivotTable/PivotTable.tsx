@@ -7,8 +7,8 @@ import createPlotlyRenderers from "react-pivottable/PlotlyRenderers";
 import { Product } from "../../types/types";
 import { getMonthName } from "./getMonthName";
 import html2canvas from "html2canvas";
-import { useScrapingStore } from "../../store/zustand";
 import formatCells from "./formatCells";
+import { useProductStore } from "../../store/ProductStore";
 
 const PlotlyRenderers = createPlotlyRenderers(Plot);
 
@@ -29,7 +29,7 @@ const handleDownload = () => {
 const PivotTable = (props: any) => {
   const [state, setState] = useState(props);
   const [originalData, setOriginalData] = useState<Product[]>([]);
-  const { products, isLoading } = useScrapingStore();
+  const { products, isLoading } = useProductStore();
 
   useEffect(() => {
     const fetchData = async () => {

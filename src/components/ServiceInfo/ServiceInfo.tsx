@@ -22,7 +22,7 @@ import AppWidgetSummary from "../AppWidgetSummary/AppWidgetSummary";
 import NavBar from "../NavBar/NavBar";
 import EtexButton from "../Button/EtexButton";
 import { runScript } from "../../api/api";
-import { useScrapingStore } from "../../store/zustand";
+import { useProductStore } from "../../store/ProductStore";
 
 function ServiceInfo() {
   const {
@@ -30,7 +30,7 @@ function ServiceInfo() {
     isLoading,
     dailyMissingProducts,
     monthlyMissingProducts,
-  } = useScrapingStore();
+  } = useProductStore();
   const [open, setOpen] = useState(false);
   const [running, setRunning] = useState(!scrapingTracker?.completed);
 

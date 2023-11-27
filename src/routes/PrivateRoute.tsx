@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { validateToken } from "../api/api";
-import { useScrapingStore } from "../store/zustand";
+import { useUserStore } from "../store/UserStore";
 
 interface PrivateRouteProps {
   element: React.ReactElement;
 }
 
 export const PrivateRoute: React.FC<PrivateRouteProps> = ({ element }) => {
-  const { authenticated, setAuthenticated } = useScrapingStore();
+  const { authenticated, setAuthenticated } = useUserStore();
 
   useEffect(() => {
     const checkAuthentication = async () => {

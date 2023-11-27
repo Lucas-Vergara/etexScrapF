@@ -9,14 +9,14 @@ import Container from "@mui/material/Container";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { AuthenticationError, login } from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import "./login.css";
-import { useScrapingStore } from "../../store/zustand";
+import "./signIn.css";
+import { useUserStore } from "../../store/UserStore";
 
 export default function SignIn() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = React.useState("");
   const [shake, setShake] = React.useState(false);
-  const { setAuthenticated } = useScrapingStore();
+  const { setAuthenticated } = useUserStore();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
