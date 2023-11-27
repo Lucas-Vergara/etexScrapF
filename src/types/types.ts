@@ -33,3 +33,9 @@ export interface DailyMissingProducts {
   product: string;
   product_url: string;
 }
+
+export interface MissingProductsDialogProps {
+  open: boolean;
+  onClose: () => void;
+  data: MonthlyMissingProducts[] | DailyMissingProducts[];
+}
