@@ -205,7 +205,7 @@ function ServiceInfo() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Los productos recopilados el día de hoy serán suplantados por los
+            Los productos recopilados el día de hoy serán reemplazados por los
             adquiridos en este nuevo proceso.
           </DialogContentText>
         </DialogContent>
