@@ -17,7 +17,7 @@ const iconComponents: Record<IconType, JSX.Element> = {
 export default function AppWidgetSummary(props: any) {
   const { title, total, icon, timeout, products } = props;
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedProducts, setSelectedProducts] = useState<any>(null); // Ajusta el tipo según tus necesidades
+  const [selectedProducts, setSelectedProducts] = useState<any>(null);
 
   const handleDialogOpen = () => {
     setSelectedProducts(products);

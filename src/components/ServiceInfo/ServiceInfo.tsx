@@ -60,8 +60,6 @@ function ServiceInfo() {
   const endDate = scrapingTracker && new Date(scrapingTracker?.completed);
   const startTime = startDate?.toLocaleTimeString();
   const completedTime = endDate?.toLocaleTimeString();
-  // const day = startDate?.toLocaleDateString();
-  console.log(monthlyMissingProducts);
 
   return (
     <div
@@ -88,7 +86,7 @@ function ServiceInfo() {
           <AppWidgetSummary
             title="Productos ausentes hoy"
             total={dailyMissingProducts?.length}
-            icon={dailyMissingProducts ? "error" : "success"}
+            icon={dailyMissingProducts?.length ? "error" : "success"}
             timeout={1000}
             products={dailyMissingProducts}
           />
