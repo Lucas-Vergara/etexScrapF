@@ -56,6 +56,8 @@ function ServiceInfo() {
     return <div>Cargando Datos...</div>;
   }
 
+  console.log();
+
   const startDate = scrapingTracker && new Date(scrapingTracker?.started);
   const endDate = scrapingTracker && new Date(scrapingTracker?.completed);
   const startTime = startDate?.toLocaleTimeString();
@@ -92,7 +94,14 @@ function ServiceInfo() {
           />
           <AppWidgetSummary
             title="Productos ausentes en los últimos 30 días"
-            total={monthlyMissingProducts?.length}
+            total={
+              monthlyMissingProducts?.length
+                ? monthlyMissingProducts.reduce(
+                    (total, p) => total + p.missingProducts.length,
+                    0
+                  )
+                : null
+            }
             icon={monthlyMissingProducts?.length ? "error" : "success"}
             timeout={2000}
             products={monthlyMissingProducts}
