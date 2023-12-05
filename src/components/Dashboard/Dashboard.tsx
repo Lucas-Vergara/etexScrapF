@@ -26,6 +26,21 @@ const Dashboard: React.FC = () => {
     Diciembre: true,
   };
 
+  const customMonthOrder = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+
   const date = new Date();
   const currentMonth = date.getMonth();
   delete months[Object.keys(months)[currentMonth]];
@@ -39,6 +54,11 @@ const Dashboard: React.FC = () => {
         vals={["Precio"]}
         aggregatorName="Average"
         filename="Herramienta levantamiento de PVP"
+        sorters={{
+          Mes: (a: string, b: string) => {
+            return customMonthOrder.indexOf(a) - customMonthOrder.indexOf(b);
+          },
+        }}
         valueFilter={{
           Mes: months,
         }}
