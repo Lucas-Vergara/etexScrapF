@@ -70,11 +70,18 @@ const Dashboard: React.FC = () => {
       <br />
       <div className="disclaimer">
         <Alert severity="info">
-          *Disclaimer: Esta herramienta es de uso exclusivo de colaboradores
-          designados de Etex Chile para visualizar el levantamiento de precios a
-          la venta al público (PVP). Toda la información recogida en esta
-          plataforma es de acceso público a través de las distintas páginas web
-          disponibles de nuestros distribuidores.
+          Esta herramienta de uso exclusivo de colaboradores designados de Etex
+          Chile para visualizar levantamiento de precios a venta público (PVP).
+          Toda la información obtenida proviene de fuentes públicas. Para
+          obtener más detalles sobre las fuentes, haga click&nbsp;
+          <a
+            href="https://github.com/Lucas-Vergara/etexScrap"
+            target="_blank"
+            rel="noreferrer"
+          >
+            aquí
+          </a>
+          .
         </Alert>
       </div>
       <Footer />

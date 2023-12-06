@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,9 +7,11 @@ import EtexButton from "../Button/EtexButton";
 import { downloadExcel } from "../../api/api";
 import { saveAs } from "file-saver";
 import { useNavigate } from "react-router-dom";
+import LegalDialog from "../LegalDialog/LegalDialog";
 
 export default function NavBar() {
   const navigate = useNavigate();
+  const [dialogOpen, setDialogOpen] = useState(false);
   const user = {
     username: "admin", // Reemplaza esto con el nombre de usuario real
   };
@@ -22,6 +24,14 @@ export default function NavBar() {
     } catch (error) {
       console.error("Error al llamar al servidor:", error);
     }
+  };
+
+  const handleLegalClick = () => {
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = () => {
+    setDialogOpen(false);
   };
 
   const handleServiceInfoClick = () => {
@@ -62,6 +72,10 @@ export default function NavBar() {
             Herramienta levantamiento de PVP
           </Typography>
           <Box sx={{ display: "flex" }}>
+            <EtexButton
+              text="Información importante"
+              onClick={handleLegalClick}
+            />
             {user.username === "admin" && (
               <EtexButton text="Usuarios" onClick={handleUsersClick} />
             )}
@@ -73,6 +87,7 @@ export default function NavBar() {
           </Box>
         </Toolbar>
       </AppBar>
+      <LegalDialog open={dialogOpen} onClose={handleDialogClose} />
     </Box>
   );
 }
