@@ -8,13 +8,13 @@ import { downloadExcel } from "../../api/api";
 import { saveAs } from "file-saver";
 import { useNavigate } from "react-router-dom";
 import LegalDialog from "../LegalDialog/LegalDialog";
+import { useUserStore } from "../../store/UserStore";
 
 export default function NavBar() {
   const navigate = useNavigate();
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const user = {
-    username: "admin", // Reemplaza esto con el nombre de usuario real
-  };
+  const { currentUser } = useUserStore();
+
   const handleDownloadExcel = async () => {
     try {
       const blob = await downloadExcel();
@@ -76,7 +76,7 @@ export default function NavBar() {
               text="Información importante"
               onClick={handleLegalClick}
             />
-            {user.username === "admin" && (
+            {currentUser.username === "admin" && (
               <EtexButton text="Usuarios" onClick={handleUsersClick} />
             )}
             <EtexButton text="Info" onClick={handleServiceInfoClick} />

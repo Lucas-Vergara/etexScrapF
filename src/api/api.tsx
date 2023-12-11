@@ -42,8 +42,6 @@ export const fetchBaseProducts = async (): Promise<BaseProduct[]> => {
     const response = await fetch(`${BASE_URL}/product/base_products`, {
       headers: myHeaders,
     });
-    console.log("entre");
-
     const data = await response.json();
     const baseProducts: BaseProduct[] = data.map((item: any) => ({
       _id: item._id,
@@ -244,6 +242,27 @@ export const deleteUser = async (userId: string): Promise<any> => {
     return response;
   } catch (error) {
     throw error;
+  }
+};
+
+export const fetchCurrentUser = async () => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const req = await fetch(`${BASE_URL}/auth/user`, {
+      headers: myHeaders,
+    });
+    if (!req.ok) {
+      throw new Error(`Error en la solicitud: ${req.statusText}`);
+    }
+    const response = await req.json();
+    return response;
+  } catch (error) {
+    return {
+      authenticated: false,
+      message: error,
+    };
   }
 };
 

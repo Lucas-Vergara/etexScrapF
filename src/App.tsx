@@ -13,7 +13,7 @@ const App: React.FC = () => {
     fetchDailyMissingProducts,
   } = useProductStore();
 
-  const { authenticated, fetchUsers } = useUserStore();
+  const { authenticated, fetchUsers, fetchCurrentUser } = useUserStore();
 
   useEffect(() => {
     if (authenticated) {
@@ -23,6 +23,7 @@ const App: React.FC = () => {
       fetchMonthlyMissingProducts();
       fetchDailyMissingProducts();
       fetchUsers();
+      fetchCurrentUser();
     }
   }, [
     authenticated,
@@ -32,6 +33,7 @@ const App: React.FC = () => {
     fetchMonthlyMissingProducts,
     fetchDailyMissingProducts,
     fetchUsers,
+    fetchCurrentUser,
   ]);
 
   return (
