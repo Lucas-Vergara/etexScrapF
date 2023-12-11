@@ -11,7 +11,7 @@ import LegalDialog from "../LegalDialog/LegalDialog";
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const user = {
     username: "admin", // Reemplaza esto con el nombre de usuario real
   };

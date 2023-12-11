@@ -7,6 +7,7 @@ import { useUserStore } from "./store/UserStore";
 const App: React.FC = () => {
   const {
     fetchProducts,
+    fetchBaseProducts,
     fetchScrapingTracker,
     fetchMonthlyMissingProducts,
     fetchDailyMissingProducts,
@@ -17,6 +18,7 @@ const App: React.FC = () => {
   useEffect(() => {
     if (authenticated) {
       fetchProducts();
+      fetchBaseProducts();
       fetchScrapingTracker();
       fetchMonthlyMissingProducts();
       fetchDailyMissingProducts();
@@ -25,6 +27,7 @@ const App: React.FC = () => {
   }, [
     authenticated,
     fetchProducts,
+    fetchBaseProducts,
     fetchScrapingTracker,
     fetchMonthlyMissingProducts,
     fetchDailyMissingProducts,

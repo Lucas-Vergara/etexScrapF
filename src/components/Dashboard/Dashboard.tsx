@@ -1,10 +1,10 @@
 import React from "react";
 import "./dashboard.css";
-import { Alert } from "@mui/material";
 import NavBar from "../NavBar/NavBar";
 import Footer from "../Footer/Footer";
 import PivotTable from "../PivotTable/PivotTable";
 import formatCells from "../PivotTable/formatCells";
+import Disclaimer from "../Disclaimer/Disclaimer";
 
 const Dashboard: React.FC = () => {
   setTimeout(() => {
@@ -48,6 +48,7 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <NavBar />
+      <Disclaimer />
       <PivotTable
         cols={["Mes", "Día"]}
         rows={["Categoría", "Producto", "Distribuidor", "Marca"]}
@@ -66,24 +67,6 @@ const Dashboard: React.FC = () => {
       <br />
       <br />
       <br />
-      <br />
-      <br />
-      <div className="disclaimer">
-        <Alert severity="info">
-          Esta herramienta de uso exclusivo de colaboradores designados de Etex
-          Chile para visualizar levantamiento de precios a venta público (PVP).
-          Toda la información obtenida proviene de fuentes públicas. Para
-          obtener más detalles sobre las fuentes, haga click&nbsp;
-          <a
-            href="https://github.com/Lucas-Vergara/etexScrap"
-            target="_blank"
-            rel="noreferrer"
-          >
-            aquí
-          </a>
-          .
-        </Alert>
-      </div>
       <Footer />
     </>
   );

@@ -13,6 +13,16 @@ export interface Product {
   region: string;
 }
 
+export interface BaseProduct {
+  _id: string;
+  name: string;
+  brand: string;
+  distributor: string;
+  sku: string;
+  category: string;
+  region: string
+}
+
 export interface ScrapingTracker {
   status: "completed",
   started: "2023-11-24T07:21:19.628Z",

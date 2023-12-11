@@ -1,4 +1,4 @@
-import { Product } from "../types/types";
+import { BaseProduct, Product } from "../types/types";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -28,6 +28,33 @@ export const fetchProducts = async (): Promise<Product[]> => {
       region: item.region,
     }));
     return products;
+  } catch (error) {
+    console.error("Error al llamar al servidor:", error);
+    throw error;
+  }
+};
+
+export const fetchBaseProducts = async (): Promise<BaseProduct[]> => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const response = await fetch(`${BASE_URL}/product/base_products`, {
+      headers: myHeaders,
+    });
+    console.log("entre");
+
+    const data = await response.json();
+    const baseProducts: BaseProduct[] = data.map((item: any) => ({
+      _id: item._id,
+      name: item.name,
+      brand: item.brand,
+      distributor: item.distributor,
+      sku: item.sku,
+      category: item.category,
+      region: item.region,
+    }));
+    return baseProducts;
   } catch (error) {
     console.error("Error al llamar al servidor:", error);
     throw error;

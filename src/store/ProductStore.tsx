@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import {
+  BaseProduct,
   DailyMissingProducts,
   MonthlyMissingProducts,
   Product,
@@ -8,6 +9,7 @@ import {
 } from "../types/types";
 import {
   fetchProducts,
+  fetchBaseProducts,
   fetchScrapingTracker,
   fetchDailyMissingProducts,
   fetchMonthlyMissingProducts,
@@ -15,9 +17,11 @@ import {
 
 interface ProductState {
   products: Product[];
+  baseProducts: BaseProduct[];
   isLoading: boolean;
   error: any | null;
   fetchProducts: () => Promise<void>;
+  fetchBaseProducts: () => Promise<void>;
   productsAmount: number;
   scrapingTracker: ScrapingTracker | null;
   fetchScrapingTracker: () => Promise<void>;
@@ -32,6 +36,7 @@ export const useProductStore = create<ProductState>()(
     persist(
       (set) => ({
         products: [],
+        baseProducts: [],
         isLoading: false,
         error: null,
         productsAmount: 0,
@@ -44,6 +49,16 @@ export const useProductStore = create<ProductState>()(
             const products = await fetchProducts();
             const productsAmount = products.length;
             set({ products, isLoading: false, productsAmount });
+          } catch (error) {
+            set({ error, isLoading: false });
+          }
+        },
+        fetchBaseProducts: async () => {
+          try {
+            set({ isLoading: true, error: null });
+            const baseProducts = await fetchBaseProducts();
+            const productsAmount = baseProducts.length;
+            set({ baseProducts, isLoading: false, productsAmount });
           } catch (error) {
             set({ error, isLoading: false });
           }

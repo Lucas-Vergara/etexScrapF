@@ -16,12 +16,6 @@
   --gradient-radial: radial-gradient(var(--black), var(--orange-peel), var(--spanish-orange), var(--harvest-gold), var(--spanish-orange-2));
 }
 
-.disclaimer {
-  position: absolute;
-  bottom: 30px;
-  left: 0;
-}
-
 /* Estilos para el título h1 */
 h1 {
   color: #333;
