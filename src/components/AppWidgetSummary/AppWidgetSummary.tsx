@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Card, Grow, Stack, Typography, Box } from "@mui/material";
 import Inventory2Icon from "@mui/icons-material/Inventory2";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
@@ -14,7 +14,7 @@ const iconComponents: Record<IconType, JSX.Element> = {
   robot: <SmartToyIcon sx={{ color: "teal", fontSize: "3rem" }} />,
 };
 
-export default function AppWidgetSummary(props: any) {
+const AppWidgetSummary = React.memo((props: any) => {
   const { title, total, icon, timeout, products } = props;
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState<any>(null);
@@ -71,4 +71,6 @@ export default function AppWidgetSummary(props: any) {
       />
     </>
   );
-}
+});
+
+export default AppWidgetSummary;

@@ -1,12 +1,32 @@
 import React from "react";
 import Button from "@mui/material/Button";
 
-interface DashboardProps {
+interface ButtonProps {
   onClick: any;
   text: string;
+  color: string;
+  original: boolean;
 }
 
-const EtexButton: React.FC<DashboardProps> = (props) => {
+const EtexButton: React.FC<ButtonProps> = (props) => {
+  if (!props.original) {
+    return (
+      <Button
+        variant="text"
+        onClick={props.onClick}
+        sx={{
+          fontSize: "16px",
+          textTransform: "none",
+          color: props.color,
+          "&:hover": {
+            backgroundColor: "rgba(251, 192, 147, 0.2)",
+          },
+        }}
+      >
+        {props.text}
+      </Button>
+    );
+  }
   return (
     <Button
       variant="contained"

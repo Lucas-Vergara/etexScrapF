@@ -89,7 +89,12 @@ const UsersPanel = () => {
               ))}
             </List>
             <br />
-            <EtexButton text="Crear Usuario" onClick={handleCreateUserClick} />
+            <EtexButton
+              original={true}
+              color="black"
+              text="Crear Usuario"
+              onClick={handleCreateUserClick}
+            />
           </CardContent>
         </Card>
       </Container>

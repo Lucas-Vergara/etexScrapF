@@ -16,7 +16,7 @@ function Disclaimer() {
     <div
       style={{
         left: "0",
-        marginTop: "-15px",
+        marginTop: "-12px",
         marginBottom: "10px",
       }}
     >

@@ -73,14 +73,28 @@ export default function NavBar() {
           </Typography>
           <Box sx={{ display: "flex" }}>
             <EtexButton
+              original={false}
+              color="#f57c00"
               text="Información importante"
               onClick={handleLegalClick}
             />
             {currentUser.username === "admin" && (
-              <EtexButton text="Usuarios" onClick={handleUsersClick} />
+              <EtexButton
+                original={false}
+                color="black"
+                text="Usuarios"
+                onClick={handleUsersClick}
+              />
             )}
-            <EtexButton text="Info" onClick={handleServiceInfoClick} />
             <EtexButton
+              original={false}
+              text="Servicio"
+              onClick={handleServiceInfoClick}
+              color="black"
+            />
+            <EtexButton
+              original={false}
+              color="black"
               onClick={handleDownloadExcel}
               text="Descargar Documento"
             ></EtexButton>

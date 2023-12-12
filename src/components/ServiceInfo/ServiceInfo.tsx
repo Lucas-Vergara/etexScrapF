@@ -202,6 +202,8 @@ function ServiceInfo() {
           </TableContainer>
           {!running && (
             <EtexButton
+              color="black"
+              original={true}
               onClick={handleRunScript}
               text="Ejecutar Proceso de Scraping"
             />
