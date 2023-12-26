@@ -286,6 +286,32 @@ export const fetchUsers = async (): Promise<
   }
 };
 
+export const changePassword = async (formData: FormData): Promise<string> => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
+    const response = await fetch(`${BASE_URL}/auth/change-password`, {
+      method: "PUT",
+      headers: myHeaders,
+      body: JSON.stringify({
+        newPassword: formData.get("password"),
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error al cambiar la contraseña: ${response.statusText}`);
+    }
+    const responseText = await response.text();
+    return responseText;
+  } catch (error) {
+    console.error("Error al cambiar la contraseña:", error);
+    throw error;
+  }
+};
+
 export class AuthenticationError extends Error {
   constructor(message: string) {
     super(message);

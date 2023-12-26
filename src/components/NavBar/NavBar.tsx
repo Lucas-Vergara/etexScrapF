@@ -45,6 +45,10 @@ export default function NavBar() {
   const handleUsersClick = () => {
     navigate("/users");
   };
+
+  const handleUserClick = () => {
+    navigate("/profile");
+  };
   return (
     <Box sx={{ flexGrow: 1, pb: 2 }}>
       <AppBar
@@ -72,6 +76,12 @@ export default function NavBar() {
             Herramienta levantamiento de PVP
           </Typography>
           <Box sx={{ display: "flex" }}>
+            <EtexButton
+              original={false}
+              text="Perfil"
+              onClick={handleUserClick}
+              color="black"
+            />
             <EtexButton
               original={false}
               color="#f57c00"

@@ -8,6 +8,7 @@ import { PrivateRoute } from "./PrivateRoute";
 import ServiceInfo from "../components/ServiceInfo/ServiceInfo";
 import SignUp from "../components/SignUp/SignUp";
 import UsersPanel from "../components/UsersPanel/UsersPanel";
+import Profile from "../components/Profile/Profile";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/login" element={<SignIn />} />
       <Route path="/register" element={<SignUp />} />
       <Route path="/users" element={<UsersPanel />} />
+      <Route path="/profile" element={<Profile />} />
       <Route
         path="/*"
         element={<Navigate to="/login" replace={true} />}
