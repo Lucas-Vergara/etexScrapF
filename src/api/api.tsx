@@ -205,11 +205,13 @@ export const register = async (
   __v: number;
 }> => {
   try {
+    var myHeaders = new Headers();
+    const accessToken = localStorage.getItem("access_token");
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
     const response = await fetch(`${BASE_URL}/auth/register`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: myHeaders,
       body: JSON.stringify({
         email: formData.get("email"),
         password: formData.get("password"),
