@@ -11,6 +11,7 @@ export interface Product {
   month: string;
   year: string;
   region: string;
+  format: string;
 }
 
 export interface BaseProduct {
@@ -20,7 +21,8 @@ export interface BaseProduct {
   distributor: string;
   sku: string;
   category: string;
-  region: string
+  region: string;
+  format: string;
 }
 
 export interface ScrapingTracker {

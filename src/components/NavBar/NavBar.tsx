@@ -3,17 +3,15 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import EtexButton from "../Button/EtexButton";
 import { downloadExcel } from "../../api/api";
 import { saveAs } from "file-saver";
 import { useNavigate } from "react-router-dom";
 import LegalDialog from "../LegalDialog/LegalDialog";
-import { useUserStore } from "../../store/UserStore";
+import NavbarButtons from "../NavBarButtons/NavBarButtons";
 
 export default function NavBar() {
   const navigate = useNavigate();
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-  const { currentUser } = useUserStore();
 
   const handleDownloadExcel = async () => {
     try {
@@ -34,21 +32,10 @@ export default function NavBar() {
     setDialogOpen(false);
   };
 
-  const handleServiceInfoClick = () => {
-    navigate("/serviceInfo");
-  };
-
   const handleLogoClick = () => {
     navigate("/");
   };
 
-  const handleUsersClick = () => {
-    navigate("/users");
-  };
-
-  const handleUserClick = () => {
-    navigate("/profile");
-  };
   return (
     <Box sx={{ flexGrow: 1, pb: 2 }}>
       <AppBar
@@ -75,40 +62,10 @@ export default function NavBar() {
           >
             Herramienta levantamiento de PVP
           </Typography>
-          <Box sx={{ display: "flex" }}>
-            <EtexButton
-              original={false}
-              text="Perfil"
-              onClick={handleUserClick}
-              color="black"
-            />
-            <EtexButton
-              original={false}
-              color="#f57c00"
-              text="Información importante"
-              onClick={handleLegalClick}
-            />
-            {currentUser.username === "admin" && (
-              <EtexButton
-                original={false}
-                color="black"
-                text="Usuarios"
-                onClick={handleUsersClick}
-              />
-            )}
-            <EtexButton
-              original={false}
-              text="Servicio"
-              onClick={handleServiceInfoClick}
-              color="black"
-            />
-            <EtexButton
-              original={false}
-              color="black"
-              onClick={handleDownloadExcel}
-              text="Descargar Documento"
-            ></EtexButton>
-          </Box>
+          <NavbarButtons
+            onLegalClick={handleLegalClick}
+            onDownloadExcel={handleDownloadExcel}
+          />
         </Toolbar>
       </AppBar>
       <LegalDialog open={dialogOpen} onClose={handleDialogClose} />

@@ -26,6 +26,7 @@ export const fetchProducts = async (): Promise<Product[]> => {
       presence: item.presence,
       price: item.price,
       region: item.region,
+      format: item.format,
     }));
     return products;
   } catch (error) {
@@ -39,7 +40,7 @@ export const fetchBaseProducts = async (): Promise<BaseProduct[]> => {
     const accessToken = localStorage.getItem("access_token");
     var myHeaders = new Headers();
     myHeaders.append("Authorization", `Bearer ${accessToken}`);
-    const response = await fetch(`${BASE_URL}/product/base_products`, {
+    const response = await fetch(`${BASE_URL}/base-products`, {
       headers: myHeaders,
     });
     const data = await response.json();
@@ -51,8 +52,66 @@ export const fetchBaseProducts = async (): Promise<BaseProduct[]> => {
       sku: item.sku,
       category: item.category,
       region: item.region,
+      format: item.format,
     }));
     return baseProducts;
+  } catch (error) {
+    console.error("Error al llamar al servidor:", error);
+    throw error;
+  }
+};
+
+export const deleteBaseProduct = async (productId: string): Promise<void> => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
+    const response = await fetch(`${BASE_URL}/base-products`, {
+      method: "DELETE",
+      headers: myHeaders,
+      body: JSON.stringify({
+        _id: productId,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error al eliminar el producto: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error("Error al llamar al servidor:", error);
+    throw error;
+  }
+};
+
+export const updateBaseProduct = async (
+  product: BaseProduct
+): Promise<void> => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
+    const response = await fetch(`${BASE_URL}/base-products`, {
+      method: "PUT",
+      headers: myHeaders,
+      body: JSON.stringify({
+        _id: product._id,
+        name: product.name,
+        brand: product.brand,
+        distributor: product.distributor,
+        sku: product.sku,
+        category: product.category,
+        region: product.region,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `Error al actualizar el producto: ${response.statusText}`
+      );
+    }
   } catch (error) {
     console.error("Error al llamar al servidor:", error);
     throw error;

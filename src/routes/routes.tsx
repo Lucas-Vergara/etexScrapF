@@ -9,6 +9,7 @@ import ServiceInfo from "../components/ServiceInfo/ServiceInfo";
 import SignUp from "../components/SignUp/SignUp";
 import UsersPanel from "../components/UsersPanel/UsersPanel";
 import Profile from "../components/Profile/Profile";
+import BaseProductsView from "../components/BaseProductsView/BaseProductsView";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/register" element={<SignUp />} />
       <Route path="/users" element={<UsersPanel />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/base-products" element={<BaseProductsView />} />
       <Route
         path="/*"
         element={<Navigate to="/login" replace={true} />}

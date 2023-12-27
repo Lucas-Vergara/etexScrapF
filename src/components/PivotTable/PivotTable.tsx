@@ -63,6 +63,7 @@ const PivotTable = (props: any) => {
     product.name,
     product.price?.toString(),
     product.region,
+    product.format,
   ]);
 
   transformedData.unshift([
@@ -76,13 +77,28 @@ const PivotTable = (props: any) => {
     "Producto",
     "Precio",
     "Región",
+    "Formato",
   ]);
 
   formatCells();
 
   return (
     <>
-      <button onClick={handleDownload}>Descargar Imagen</button>
+      <button
+        onClick={handleDownload}
+        style={{
+          backgroundColor: "#FFA07A", // Un naranja pastel
+          color: "white",
+          padding: "5px 5px",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+          margin: "1px 0px",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+        }}
+      >
+        Descargar Imagen
+      </button>
       <div id="pivottable">
         <PivotTableUI
           data={transformedData}
