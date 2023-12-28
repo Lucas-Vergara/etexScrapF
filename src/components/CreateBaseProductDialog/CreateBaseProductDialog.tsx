@@ -78,6 +78,12 @@ const CreateBaseProductDialog: React.FC<CreateBaseProductProps> = ({
         "Error durante el scraping: Protocol error (Page.navigate): Cannot navigate to invalid URL"
       ) {
         setError("Url no encontrada");
+      } else if (
+        error.message.startsWith(
+          "Error durante el scraping: Waiting for selector"
+        )
+      ) {
+        setError("Precio o Título del producto no encontrado");
       } else {
         setError(error.message);
       }

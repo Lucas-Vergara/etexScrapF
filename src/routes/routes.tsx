@@ -1,5 +1,3 @@
-// routes.tsx
-
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Dashboard from "../components/Dashboard/Dashboard";
@@ -27,6 +25,16 @@ const AppRoutes: React.FC = () => {
       <Route
         path="/serviceInfo"
         element={<PrivateRoute element={<ServiceInfo />} />}
+      />
+      <Route path="/register" element={<PrivateRoute element={<SignUp />} />} />
+      <Route
+        path="/users"
+        element={<PrivateRoute element={<UsersPanel />} />}
+      />
+      <Route path="/profile" element={<PrivateRoute element={<Profile />} />} />
+      <Route
+        path="/base-products"
+        element={<PrivateRoute element={<BaseProductsView />} />}
       />
     </Routes>
   );
