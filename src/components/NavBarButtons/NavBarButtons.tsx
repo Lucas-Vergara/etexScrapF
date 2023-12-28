@@ -24,6 +24,12 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const { currentUser } = useUserStore();
+  const adminUsers = [
+    "paola.salcedo@etexgroup.com",
+    "tomas.meyer@etexgroup.com",
+    "jose.fuenzalida@etexgroup.com",
+    "admin",
+  ];
   const handleLogout = () => {
     localStorage.clear(); // Limpia el localStorage
     navigate("/login"); // Redirige a la ruta de inicio de sesión
@@ -55,6 +61,11 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
     setDrawerOpen(false);
   };
 
+  const handleEditBaseProductClick = () => {
+    navigate("/base-products");
+    setDrawerOpen(false);
+  };
+
   const list = () => (
     <List>
       <ListItem disablePadding>
@@ -62,7 +73,7 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
           <ListItemText primary="Cambiar Contraseña" />
         </ListItemButton>
       </ListItem>
-      {currentUser.username === "admin" && (
+      {adminUsers.some((x) => x === currentUser.username) && (
         <ListItem disablePadding>
           <ListItemButton onClick={handleUsersClick}>
             <ListItemText primary="Usuarios" />
@@ -74,6 +85,11 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
           <ListItemText primary="Servicio" />
         </ListItemButton>
       </ListItem>
+      {/* <ListItem disablePadding>
+        <ListItemButton onClick={handleEditBaseProductClick}>
+          <ListItemText primary="Productos Base" />
+        </ListItemButton>
+      </ListItem> */}
       <ListItem disablePadding>
         <ListItemButton onClick={onDownloadExcel}>
           <ListItemText

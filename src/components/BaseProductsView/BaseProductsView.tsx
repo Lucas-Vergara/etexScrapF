@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { Container } from "@mui/material";
+import {
+  Backdrop,
+  Box,
+  Button,
+  CircularProgress,
+  Typography,
+} from "@mui/material";
 import BaseProductDataTable from "../BaseProductsTable/BaseProductTable";
 import NavBar from "../NavBar/NavBar";
 import EditBaseProductDialog from "../EditBaseProductDialog/EditBaseProductDialog";
@@ -11,7 +17,13 @@ import { BaseProduct } from "../../types/types";
 const BaseProductsView: React.FC = () => {
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  // Suponiendo que tienes un estado para el producto seleccionado
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
   const [currentProduct, setCurrentProduct] = useState<BaseProduct>({
     _id: "658b6f151166e47c8ef3ee52",
     sku: "SKU12345",
@@ -25,8 +37,6 @@ const BaseProductsView: React.FC = () => {
 
   const handleEdit = (product: BaseProduct) => {
     setCurrentProduct(product);
-    console.log(currentProduct);
-
     setIsEditDialogOpen(true);
   };
 
@@ -41,47 +51,56 @@ const BaseProductsView: React.FC = () => {
   };
 
   const handleSaveEditedProduct = async (editedProduct: any) => {
-    try {
-      await updateBaseProduct(editedProduct);
-      // Aquí podrías también llamar a una función para recargar los productos o actualizar el estado
-      handleCloseDialogs();
-    } catch (error) {
-      // Manejar errores, como mostrar un mensaje al usuario
-      console.error(error);
-    }
+    const updatedProduct = await updateBaseProduct(editedProduct);
+    handleCloseDialogs();
+    return updatedProduct;
   };
 
   const handleConfirmDelete = async (productId: string) => {
-    await deleteBaseProduct(productId); // Asegúrate de que tienes el ID del producto a eliminar
+    await deleteBaseProduct(productId);
     handleCloseDialogs();
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: "#f9fafb",
-        minHeight: "100vh",
-        flexDirection: "column",
-        alignItems: "center",
-      }}
-    >
+    <>
       <NavBar />
-      <Container>
-        <BaseProductDataTable onEdit={handleEdit} onDelete={handleDelete} />
-        <EditBaseProductDialog
-          product={currentProduct}
-          open={isEditDialogOpen}
-          onClose={handleCloseDialogs}
-          onSave={handleSaveEditedProduct}
-        />
-        <DeleteBaseProductDialog
-          productId={currentProduct._id}
-          open={isDeleteDialogOpen}
-          onClose={handleCloseDialogs}
-          onConfirm={handleConfirmDelete}
-        />
-      </Container>
-    </div>
+      <div>
+        <Button onClick={handleOpen}>Show backdrop</Button>
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+          onClick={handleClose}
+        >
+          <CircularProgress color="inherit" />
+        </Backdrop>
+      </div>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Typography component="h1" variant="h5" m={4}>
+          Productos Base
+        </Typography>
+        <div>
+          <BaseProductDataTable onEdit={handleEdit} onDelete={handleDelete} />
+          <EditBaseProductDialog
+            product={currentProduct}
+            open={isEditDialogOpen}
+            onClose={handleCloseDialogs}
+            onSave={handleSaveEditedProduct}
+          />
+          <DeleteBaseProductDialog
+            product={currentProduct}
+            open={isDeleteDialogOpen}
+            onClose={handleCloseDialogs}
+            onConfirm={handleConfirmDelete}
+          />
+        </div>
+      </Box>
+    </>
   );
 };
 

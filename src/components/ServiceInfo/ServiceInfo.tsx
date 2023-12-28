@@ -56,8 +56,6 @@ function ServiceInfo() {
     return <div>Cargando Datos...</div>;
   }
 
-  console.log();
-
   const startDate = scrapingTracker && new Date(scrapingTracker?.started);
   const endDate = scrapingTracker && new Date(scrapingTracker?.completed);
   const startTime = startDate?.toLocaleTimeString();

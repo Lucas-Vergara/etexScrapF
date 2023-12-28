@@ -73,20 +73,25 @@ const UsersPanel = () => {
               Usuarios
             </Typography>
             <List sx={{ width: "100%" }}>
-              {users?.map((user) => (
-                <ListItem
-                  key={user.id}
-                  sx={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  <ListItemText primary={user.email} />
-                  <IconButton
-                    onClick={() => handleDeleteUser(user.id)}
-                    color="error"
+              {users?.map((user) => {
+                if (user.email === "admin") {
+                  return null;
+                }
+                return (
+                  <ListItem
+                    key={user.id}
+                    sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <DeleteIcon />
-                  </IconButton>
-                </ListItem>
-              ))}
+                    <ListItemText primary={user.email} />
+                    <IconButton
+                      onClick={() => handleDeleteUser(user.id)}
+                      color="error"
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </ListItem>
+                );
+              })}
             </List>
             <br />
             <EtexButton

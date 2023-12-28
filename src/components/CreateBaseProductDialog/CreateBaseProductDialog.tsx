@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -15,20 +15,31 @@ import {
 import { BaseProduct } from "../../types/types";
 import { useProductStore } from "../../store/ProductStore";
 
-interface EditBaseProductProps {
-  product: BaseProduct;
+interface CreateBaseProductProps {
   open: boolean;
   onClose: () => void;
-  onSave: (product: BaseProduct) => any; // Función para actualizar el producto
+  onSave: (product: BaseProduct) => any; // Función para crear un nuevo producto
 }
 
-const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
-  product,
+const CreateBaseProductDialog: React.FC<CreateBaseProductProps> = ({
   open,
   onClose,
   onSave,
 }) => {
-  const [editedProduct, setEditedProduct] = useState<BaseProduct>(product);
+  // Estado para el nuevo producto
+  const store = useProductStore();
+  const [error, setError] = useState("");
+
+  const [newProduct, setNewProduct] = useState<any>({
+    sku: "",
+    name: "",
+    brand: "",
+    distributor: "",
+    category: "",
+    region: "",
+    format: "",
+  });
+
   const distributorOptions = [
     "Construmart",
     "Construplaza",
@@ -41,31 +52,25 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
     "Weitzler",
     "Yolito",
   ];
-  const store = useProductStore();
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    setEditedProduct(product);
-  }, [product]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEditedProduct({
-      ...editedProduct,
+    setNewProduct({
+      ...newProduct,
       [event.target.name]: event.target.value,
     });
   };
 
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
-    setEditedProduct({
-      ...editedProduct,
+    setNewProduct({
+      ...newProduct,
       [event.target.name]: event.target.value as string,
     });
   };
 
   const handleSubmit = async () => {
     try {
-      const savedProduct = await onSave(editedProduct);
-      store.editBaseProduct(savedProduct);
+      const createdProduct = await onSave(newProduct);
+      store.addBaseProduct(createdProduct);
       onClose();
     } catch (error: any) {
       if (
@@ -73,12 +78,6 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
         "Error durante el scraping: Protocol error (Page.navigate): Cannot navigate to invalid URL"
       ) {
         setError("Url no encontrada");
-      } else if (
-        error.message.startsWith(
-          "Error durante el scraping: Waiting for selector"
-        )
-      ) {
-        setError("Precio o Título del producto no encontrado");
       } else {
         setError(error.message);
       }
@@ -88,13 +87,13 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
   return (
     <>
       <Dialog open={open} onClose={onClose}>
-        <DialogTitle>Editar Producto</DialogTitle>
+        <DialogTitle>Crear Nuevo Producto</DialogTitle>
         <DialogContent>
           {error && <div style={{ color: "red" }}>{error}</div>}
           <TextField
             label="URL"
             name="sku"
-            value={editedProduct.sku}
+            value={newProduct.sku}
             onChange={handleChange}
             margin="normal"
             fullWidth
@@ -102,7 +101,7 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
           <TextField
             label="Nombre"
             name="name"
-            value={editedProduct.name}
+            value={newProduct.name}
             onChange={handleChange}
             margin="normal"
             fullWidth
@@ -110,7 +109,7 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
           <TextField
             label="Marca"
             name="brand"
-            value={editedProduct.brand}
+            value={newProduct.brand}
             onChange={handleChange}
             margin="normal"
             fullWidth
@@ -119,7 +118,7 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
             <InputLabel>Distribuidor</InputLabel>
             <Select
               name="distributor"
-              value={editedProduct.distributor}
+              value={newProduct.distributor}
               onChange={handleSelectChange}
               label="Distribuidor"
             >
@@ -133,7 +132,7 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
           <TextField
             label="Categoría"
             name="category"
-            value={editedProduct.category}
+            value={newProduct.category}
             onChange={handleChange}
             margin="normal"
             fullWidth
@@ -141,7 +140,7 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
           <TextField
             label="Región"
             name="region"
-            value={editedProduct.region}
+            value={newProduct.region}
             onChange={handleChange}
             margin="normal"
             fullWidth
@@ -149,7 +148,7 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
           <TextField
             label="Formato"
             name="format"
-            value={editedProduct.format}
+            value={newProduct.format}
             onChange={handleChange}
             margin="normal"
             fullWidth
@@ -157,11 +156,11 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={onClose}>Cancelar</Button>
-          <Button onClick={handleSubmit}>Guardar</Button>
+          <Button onClick={handleSubmit}>Crear</Button>
         </DialogActions>
       </Dialog>
     </>
   );
 };
 
-export default EditBaseProductDialog;
+export default CreateBaseProductDialog;

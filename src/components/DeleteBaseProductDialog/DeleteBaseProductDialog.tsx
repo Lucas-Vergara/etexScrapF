@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -6,22 +6,32 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
+import { BaseProduct } from "../../types/types";
+import { useProductStore } from "../../store/ProductStore";
 
 interface DeleteBaseProductProps {
   open: boolean;
   onClose: () => void;
-  productId: string;
+  product: BaseProduct;
   onConfirm: (productId: string) => void;
 }
 
 const DeleteBaseProductDialog: React.FC<DeleteBaseProductProps> = ({
   open,
   onClose,
-  productId,
+  product,
   onConfirm,
 }) => {
+  const [editedProduct, setEditedProduct] = useState<BaseProduct>(product);
+  const store = useProductStore();
+
+  useEffect(() => {
+    setEditedProduct(product);
+  }, [product]);
+
   const handleConfirm = () => {
-    onConfirm(productId);
+    onConfirm(editedProduct._id);
+    store.deleteBaseProduct(editedProduct._id);
     onClose();
   };
   return (

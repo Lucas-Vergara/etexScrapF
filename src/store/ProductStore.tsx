@@ -29,6 +29,9 @@ interface ProductState {
   dailyMissingProducts: DailyMissingProducts[];
   fetchMonthlyMissingProducts: () => Promise<void>;
   monthlyMissingProducts: MonthlyMissingProducts[];
+  addBaseProduct: (newProduct: BaseProduct) => void;
+  editBaseProduct: (newProduct: BaseProduct) => void;
+  deleteBaseProduct: (productId: string) => void;
 }
 
 export const useProductStore = create<ProductState>()(
@@ -80,6 +83,25 @@ export const useProductStore = create<ProductState>()(
             const monthlyMissingProducts = await fetchMonthlyMissingProducts();
             set({ monthlyMissingProducts });
           } catch (error) {}
+        },
+        addBaseProduct: (newProduct: BaseProduct) => {
+          set((state) => ({
+            baseProducts: [...state.baseProducts, newProduct],
+          }));
+        },
+        editBaseProduct: (updatedProduct: BaseProduct) => {
+          set((state) => ({
+            baseProducts: state.baseProducts.map((product) =>
+              product._id === updatedProduct._id ? updatedProduct : product
+            ),
+          }));
+        },
+        deleteBaseProduct: (productId: string) => {
+          set((state) => ({
+            baseProducts: state.baseProducts.filter(
+              (product) => product._id !== productId
+            ),
+          }));
         },
       }),
       { name: "productStore" }

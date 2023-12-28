@@ -65,6 +65,7 @@ export const deleteBaseProduct = async (productId: string): Promise<void> => {
   try {
     const accessToken = localStorage.getItem("access_token");
     var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
     myHeaders.append("Authorization", `Bearer ${accessToken}`);
 
     const response = await fetch(`${BASE_URL}/base-products`, {
@@ -84,9 +85,7 @@ export const deleteBaseProduct = async (productId: string): Promise<void> => {
   }
 };
 
-export const updateBaseProduct = async (
-  product: BaseProduct
-): Promise<void> => {
+export const updateBaseProduct = async (product: BaseProduct): Promise<any> => {
   try {
     const accessToken = localStorage.getItem("access_token");
     var myHeaders = new Headers();
@@ -104,14 +103,43 @@ export const updateBaseProduct = async (
         sku: product.sku,
         category: product.category,
         region: product.region,
+        format: product.format,
       }),
     });
 
     if (!response.ok) {
-      throw new Error(
-        `Error al actualizar el producto: ${response.statusText}`
-      );
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error desconocido");
     }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error al llamar al servidor:", error);
+    throw error;
+  }
+};
+
+export const createBaseProduct = async (
+  newProduct: BaseProduct
+): Promise<any> => {
+  try {
+    const accessToken = localStorage.getItem("access_token");
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+
+    const response = await fetch(`${BASE_URL}/base-products`, {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify(newProduct),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Error desconocido");
+    }
+
+    return await response.json();
   } catch (error) {
     console.error("Error al llamar al servidor:", error);
     throw error;
