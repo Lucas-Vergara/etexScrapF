@@ -128,8 +128,8 @@ function ServiceInfo() {
             <>
               <CircularProgress
                 disableShrink
-                size={120} // Puedes ajustar el tamaño según sea necesario
-                thickness={5} // Puedes ajustar el grosor del anillo
+                size={120}
+                thickness={5}
                 sx={{
                   position: "absolute",
                   top: "35%",

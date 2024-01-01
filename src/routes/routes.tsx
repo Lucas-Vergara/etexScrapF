@@ -17,10 +17,10 @@ const AppRoutes: React.FC = () => {
       <Route path="/users" element={<UsersPanel />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/base-products" element={<BaseProductsView />} />
-      <Route
+      {/* <Route
         path="/*"
         element={<Navigate to="/login" replace={true} />}
-      ></Route>
+      ></Route> */}
       <Route index element={<PrivateRoute element={<Dashboard />} />} />
       <Route
         path="/serviceInfo"

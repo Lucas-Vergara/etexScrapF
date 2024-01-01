@@ -31,3 +31,8 @@ canvas {
   display: block;
   margin: 20px 0;
 }
+
+.pivotTable {
+  overflow-x: auto; /* Habilita el desplazamiento horizontal */
+  white-space: nowrap; /* Evita el salto de línea en el contenido */
+}

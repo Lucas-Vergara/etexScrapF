@@ -11,9 +11,6 @@ import {
 import { useProductStore } from "../../store/ProductStore";
 import { Button, IconButton, ThemeProvider, createTheme } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import { BaseProduct } from "../../types/types";
-import CreateBaseProductDialog from "../CreateBaseProductDialog/CreateBaseProductDialog";
-import { createBaseProduct } from "../../api/api";
 
 const theme = createTheme({
   palette: {
@@ -35,28 +32,16 @@ const theme = createTheme({
 interface BaseProductsDataTableProps {
   onEdit: (row: any) => void;
   onDelete: (row: any) => void;
+  handleCreateProductOpen: () => void;
 }
 
 const BaseProductsDataTable: React.FC<BaseProductsDataTableProps> = ({
   onEdit,
   onDelete,
+  handleCreateProductOpen,
 }) => {
   const { baseProducts } = useProductStore();
-  const [createDialogOpen, setCreateDialogOpen] = React.useState(false);
 
-  const handleCreateProductSave = async (newProduct: BaseProduct) => {
-    const product = await createBaseProduct(newProduct);
-    setCreateDialogOpen(false);
-    return product;
-  };
-
-  const handleCreateProductOpen = () => {
-    setCreateDialogOpen(true);
-  };
-
-  const handleCreateProductClose = () => {
-    setCreateDialogOpen(false);
-  };
   const rows = baseProducts.map((product) => ({
     id: product._id,
     ...product,
@@ -86,7 +71,7 @@ const BaseProductsDataTable: React.FC<BaseProductsDataTableProps> = ({
       renderCell: (params) => (
         <>
           <IconButton aria-label="edit" onClick={() => onEdit(params.row)}>
-            <EditIcon sx={{ color: "orange" }} />
+            <EditIcon sx={{ color: "#f57c00" }} />
           </IconButton>
           <IconButton aria-label="delete" onClick={() => onDelete(params.row)}>
             <GridDeleteIcon sx={{ color: "red" }} />
@@ -140,11 +125,6 @@ const BaseProductsDataTable: React.FC<BaseProductsDataTableProps> = ({
           localeText={esES.components.MuiDataGrid.defaultProps.localeText}
         />
       </ThemeProvider>
-      <CreateBaseProductDialog
-        open={createDialogOpen}
-        onClose={handleCreateProductClose}
-        onSave={handleCreateProductSave}
-      />
     </div>
   );
 };

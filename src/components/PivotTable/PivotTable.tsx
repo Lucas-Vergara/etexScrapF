@@ -6,25 +6,10 @@ import Plot from "react-plotly.js";
 import createPlotlyRenderers from "react-pivottable/PlotlyRenderers";
 import { Product } from "../../types/types";
 import { getMonthName } from "./getMonthName";
-import html2canvas from "html2canvas";
 import formatCells from "./formatCells";
 import { useProductStore } from "../../store/ProductStore";
 
 const PlotlyRenderers = createPlotlyRenderers(Plot);
-
-const handleDownload = () => {
-  const element = document.getElementById("pivottable") as HTMLDivElement;
-  if (element) {
-    html2canvas(element).then((canvas) => {
-      const link = document.createElement("a");
-      link.href = canvas.toDataURL();
-      link.download = "tablaPVP.png";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-  }
-};
 
 const PivotTable = (props: any) => {
   const [state, setState] = useState(props);
@@ -84,21 +69,6 @@ const PivotTable = (props: any) => {
 
   return (
     <>
-      <button
-        onClick={handleDownload}
-        style={{
-          backgroundColor: "#FFA07A", // Un naranja pastel
-          color: "white",
-          padding: "5px 5px",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-          margin: "1px 0px",
-          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
-        }}
-      >
-        Descargar Imagen
-      </button>
       <div id="pivottable">
         <PivotTableUI
           data={transformedData}

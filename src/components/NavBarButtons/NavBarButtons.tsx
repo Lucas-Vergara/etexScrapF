@@ -31,8 +31,8 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
     "admin",
   ];
   const handleLogout = () => {
-    localStorage.clear(); // Limpia el localStorage
-    navigate("/login"); // Redirige a la ruta de inicio de sesión
+    localStorage.clear();
+    navigate("/login");
   };
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -85,11 +85,13 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
           <ListItemText primary="Servicio" />
         </ListItemButton>
       </ListItem>
-      {/* <ListItem disablePadding>
-        <ListItemButton onClick={handleEditBaseProductClick}>
-          <ListItemText primary="Productos Base" />
-        </ListItemButton>
-      </ListItem> */}
+      {adminUsers.some((x) => x === currentUser.username) && (
+        <ListItem disablePadding>
+          <ListItemButton onClick={handleEditBaseProductClick}>
+            <ListItemText primary="Productos Base" />
+          </ListItemButton>
+        </ListItem>
+      )}
       <ListItem disablePadding>
         <ListItemButton onClick={onDownloadExcel}>
           <ListItemText

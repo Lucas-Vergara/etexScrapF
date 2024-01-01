@@ -14,12 +14,16 @@ import {
 } from "@mui/material";
 import { BaseProduct } from "../../types/types";
 import { useProductStore } from "../../store/ProductStore";
+import GenericDialog from "../GenericDialog/GenericDialog";
+import productValidations from "../../helpers/productValidations";
+import { getErrorMessage } from "../../helpers/formErrors";
 
 interface EditBaseProductProps {
   product: BaseProduct;
   open: boolean;
   onClose: () => void;
-  onSave: (product: BaseProduct) => any; // Función para actualizar el producto
+  onSave: (product: BaseProduct) => any;
+  setLoading: (loading: boolean) => void;
 }
 
 const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
@@ -27,6 +31,7 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
   open,
   onClose,
   onSave,
+  setLoading,
 }) => {
   const [editedProduct, setEditedProduct] = useState<BaseProduct>(product);
   const distributorOptions = [
@@ -43,6 +48,13 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
   ];
   const store = useProductStore();
   const [error, setError] = useState("");
+  const [openGenericDialog, setOpenGenericDialog] = useState(false);
+  const handleOpenLoading = () => {
+    setLoading(true);
+  };
+  const handleCloseLoading = () => {
+    setLoading(false);
+  };
 
   useEffect(() => {
     setEditedProduct(product);
@@ -55,35 +67,58 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
     });
   };
 
+  const regionOptions = ["RM", "Los Lagos", "Valparaiso"];
+
   const handleSelectChange = (event: SelectChangeEvent<string>) => {
+    const { name, value } = event.target;
+    let newRegion = editedProduct.region;
+
+    if (name === "distributor") {
+      if (value === "Toso") {
+        newRegion = "Valparaiso";
+      } else if (value === "Weitzler") {
+        newRegion = "Los Lagos";
+      } else {
+        newRegion = "RM";
+      }
+    }
+
     setEditedProduct({
       ...editedProduct,
-      [event.target.name]: event.target.value as string,
+      [name]: value,
+      ...(name === "distributor" && { region: newRegion }),
     });
   };
 
   const handleSubmit = async () => {
+    const emptyField = productValidations(editedProduct);
+    if (emptyField) {
+      setError(`El campo '${emptyField}' no puede estar vacío`);
+      return;
+    }
     try {
+      handleOpenLoading();
       const savedProduct = await onSave(editedProduct);
+      handleCloseLoading();
       store.editBaseProduct(savedProduct);
+      setOpenGenericDialog(true);
       onClose();
     } catch (error: any) {
-      if (
-        error.message ===
-        "Error durante el scraping: Protocol error (Page.navigate): Cannot navigate to invalid URL"
-      ) {
-        setError("Url no encontrada");
-      } else if (
-        error.message.startsWith(
-          "Error durante el scraping: Waiting for selector"
-        )
-      ) {
-        setError("Precio o Título del producto no encontrado");
-      } else {
-        setError(error.message);
+      if (error instanceof Error) {
+        setError(getErrorMessage(error));
       }
+    } finally {
+      handleCloseLoading();
     }
   };
+
+  const handleCloseGenericDialog = () => {
+    setOpenGenericDialog(false);
+  };
+
+  useEffect(() => {
+    setError("");
+  }, [open]);
 
   return (
     <>
@@ -138,14 +173,21 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
             margin="normal"
             fullWidth
           />
-          <TextField
-            label="Región"
-            name="region"
-            value={editedProduct.region}
-            onChange={handleChange}
-            margin="normal"
-            fullWidth
-          />
+          <FormControl fullWidth margin="normal">
+            <InputLabel>Región</InputLabel>
+            <Select
+              name="region"
+              value={editedProduct.region}
+              onChange={handleSelectChange}
+              label="Región"
+            >
+              {regionOptions.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             label="Formato"
             name="format"
@@ -160,6 +202,14 @@ const EditBaseProductDialog: React.FC<EditBaseProductProps> = ({
           <Button onClick={handleSubmit}>Guardar</Button>
         </DialogActions>
       </Dialog>
+      <GenericDialog
+        onClose={handleCloseGenericDialog}
+        open={openGenericDialog}
+        text={"¡Producto Actualizado Exitosamente!"}
+        text2={null}
+        width={null}
+        closeOption={null}
+      />
     </>
   );
 };
