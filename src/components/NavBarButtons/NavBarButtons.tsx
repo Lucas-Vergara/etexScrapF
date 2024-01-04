@@ -27,6 +27,7 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
   const adminUsers = [
     "paola.salcedo@etexgroup.com",
     "tomas.meyer@etexgroup.com",
+    "carolina.sepulveda@etexgroup.com",
     "jose.fuenzalida@etexgroup.com",
     "admin",
   ];
