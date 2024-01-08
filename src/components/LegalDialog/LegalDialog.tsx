@@ -58,7 +58,8 @@ const LegalDialog: React.FC<{ open: boolean; onClose: () => void }> = ({
           <ul>
             <li>
               La información disponible en este sitio es comercialmente sensible
-              y altamente confidencial...
+              y altamente confidencial. Por lo anterior, utilícela con fines
+              exclusivamente internos.
             </li>
             <li>Utilícela con fines exclusivamente internos.</li>
             <li>
@@ -72,7 +73,9 @@ const LegalDialog: React.FC<{ open: boolean; onClose: () => void }> = ({
           <ul>
             <li>
               Informe de inmediato a su supervisor, punto de contacto legal y/o
-              al Oficial de Cumplimiento de Etex...
+              al Oficial de Cumplimiento de Etex cualquier acto, evento u
+              omisión que constituya o pueda constituir un incumplimiento de las
+              obligaciones relacionadas con el uso de este sitio.
             </li>
             <li>
               El incumplimiento de cualquiera de estas recomendaciones puede
