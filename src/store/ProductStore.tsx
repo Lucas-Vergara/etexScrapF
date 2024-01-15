@@ -8,7 +8,6 @@ import {
   ScrapingTracker,
 } from "../types/types";
 import {
-  fetchProducts,
   fetchBaseProducts,
   fetchScrapingTracker,
   fetchDailyMissingProducts,
@@ -48,10 +47,10 @@ export const useProductStore = create<ProductState>()(
         monthlyMissingProducts: [],
         fetchProducts: async () => {
           try {
-            set({ isLoading: true, error: null });
-            const products = await fetchProducts();
-            const productsAmount = products.length;
-            set({ products, isLoading: false, productsAmount });
+            // set({ isLoading: true, error: null });
+            // const products = await fetchProducts();
+            // const productsAmount = products.length;
+            // set({ products, isLoading: false, productsAmount });
           } catch (error) {
             set({ error, isLoading: false });
           }

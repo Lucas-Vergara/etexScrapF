@@ -7,27 +7,28 @@ import createPlotlyRenderers from "react-pivottable/PlotlyRenderers";
 import { Product } from "../../types/types";
 import { getMonthName } from "./getMonthName";
 import formatCells from "./formatCells";
-import { useProductStore } from "../../store/ProductStore";
+import { fetchProducts } from "../../api/api";
 
 const PlotlyRenderers = createPlotlyRenderers(Plot);
 
 const PivotTable = (props: any) => {
   const [state, setState] = useState(props);
   const [originalData, setOriginalData] = useState<Product[]>([]);
-  const { products, isLoading } = useProductStore();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = products;
+        const data = await fetchProducts();
         setOriginalData(data);
+        setIsLoading(false);
       } catch (error) {
         throw error;
       }
     };
 
     fetchData();
-  }, [products]);
+  }, []);
 
   useEffect(() => {
     formatCells();
