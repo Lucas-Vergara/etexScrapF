@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PivotTableUI from "react-pivottable/PivotTableUI";
 import "react-pivottable/pivottable.css";
 import TableRenderers from "react-pivottable/TableRenderers";
@@ -15,6 +15,7 @@ const PivotTable = (props: any) => {
   const [state, setState] = useState(props);
   const [originalData, setOriginalData] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const tableRef = useRef(null); // Crear un ref
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,6 +23,9 @@ const PivotTable = (props: any) => {
         const data = await fetchProducts();
         setOriginalData(data);
         setIsLoading(false);
+        setTimeout(() => {
+          formatCells();
+        }, 500); //  medio segundo
       } catch (error) {
         throw error;
       }
@@ -31,8 +35,11 @@ const PivotTable = (props: any) => {
   }, []);
 
   useEffect(() => {
-    formatCells();
-  }, [state]);
+    if (tableRef.current) {
+      formatCells(); // Llamar a formatCells cuando el ref esté listo
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state, tableRef.current]);
 
   if (isLoading) {
     return <div>Cargando Tabla Dinámica...</div>;
@@ -66,11 +73,9 @@ const PivotTable = (props: any) => {
     "Formato",
   ]);
 
-  formatCells();
-
   return (
     <>
-      <div id="pivottable">
+      <div id="pivottable" ref={tableRef}>
         <PivotTableUI
           data={transformedData}
           onChange={(s) => setState(s)}
