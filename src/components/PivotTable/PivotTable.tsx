@@ -36,7 +36,7 @@ const PivotTable = (props: any) => {
 
   useEffect(() => {
     if (tableRef.current) {
-      formatCells(); // Llamar a formatCells cuando el ref esté listo
+      formatCells();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state, tableRef.current]);

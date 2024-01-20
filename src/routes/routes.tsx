@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Dashboard from "../components/Dashboard/Dashboard";
 import SignIn from "../components/SignIn/SignIn";
 import { PrivateRoute } from "./PrivateRoute";
