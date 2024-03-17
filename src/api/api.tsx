@@ -414,3 +414,25 @@ export class AuthenticationError extends Error {
     this.name = 'AuthenticationError';
   }
 }
+
+export const downloadBaseProductsExcel = async (): Promise<Blob> => {
+  try {
+    const accessToken = localStorage.getItem('access_token');
+    var myHeaders = new Headers();
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
+
+    const response = await fetch(`${BASE_URL}/base-products/download`, {
+      headers: myHeaders,
+    });
+
+    if (response.ok) {
+      const blob = await response.blob();
+      return blob;
+    } else {
+      throw new Error(`Error en la descarga: ${response.statusText}`);
+    }
+  } catch (error) {
+    console.error('Error al llamar al servidor:', error);
+    throw error;
+  }
+};

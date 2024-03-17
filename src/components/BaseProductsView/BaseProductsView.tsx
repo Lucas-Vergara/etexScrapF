@@ -1,17 +1,19 @@
-import React, { useState } from "react";
-import { Box, Typography } from "@mui/material";
-import BaseProductDataTable from "../BaseProductsTable/BaseProductTable";
-import NavBar from "../NavBar/NavBar";
-import EditBaseProductDialog from "../EditBaseProductDialog/EditBaseProductDialog";
-import DeleteBaseProductDialog from "../DeleteBaseProductDialog/DeleteBaseProductDialog";
+import React, { useState } from 'react';
+import { Box, Button, Typography } from '@mui/material';
+import BaseProductDataTable from '../BaseProductsTable/BaseProductTable';
+import NavBar from '../NavBar/NavBar';
+import EditBaseProductDialog from '../EditBaseProductDialog/EditBaseProductDialog';
+import DeleteBaseProductDialog from '../DeleteBaseProductDialog/DeleteBaseProductDialog';
 import {
   createBaseProduct,
   deleteBaseProduct,
+  downloadBaseProductsExcel,
   updateBaseProduct,
-} from "../../api/api";
-import { BaseProduct } from "../../types/types";
-import CreateBaseProductDialog from "../CreateBaseProductDialog/CreateBaseProductDialog";
-import LoadingDialog from "../LoadingDialog/LoadingDialog";
+} from '../../api/api';
+import { BaseProduct } from '../../types/types';
+import CreateBaseProductDialog from '../CreateBaseProductDialog/CreateBaseProductDialog';
+import LoadingDialog from '../LoadingDialog/LoadingDialog';
+import { saveAs } from 'file-saver';
 
 const BaseProductsView: React.FC = () => {
   const handleCloseDialogs = () => {
@@ -20,14 +22,14 @@ const BaseProductsView: React.FC = () => {
     setIsDeleteDialogOpen(false);
   };
   const [currentProduct, setCurrentProduct] = useState<BaseProduct>({
-    _id: "658b6f151166e47c8ef3ee52",
-    sku: "SKU12345",
-    name: "Nuevo Nombre del Producto",
-    brand: "Nueva Marca",
-    distributor: "Distribuidor",
-    category: "Categoría",
-    region: "Región",
-    format: "2,97 m2",
+    _id: '658b6f151166e47c8ef3ee52',
+    sku: 'SKU12345',
+    name: 'Nuevo Nombre del Producto',
+    brand: 'Nueva Marca',
+    distributor: 'Distribuidor',
+    category: 'Categoría',
+    region: 'Región',
+    format: '2,97 m2',
   });
 
   const [loading, setLoading] = useState(false);
@@ -68,20 +70,40 @@ const BaseProductsView: React.FC = () => {
     handleCloseDialogs();
   };
 
+  const handleDownloadExcel = async () => {
+    try {
+      const blob = await downloadBaseProductsExcel();
+      saveAs(blob, 'Productos Base Matconstpvp.xlsx');
+      console.log('Descarga exitosa de BaseProducts');
+    } catch (error) {
+      console.error('Error al descargar BaseProducts:', error);
+    }
+  };
+
   return (
     <>
       <NavBar />
       <LoadingDialog open={loading} />
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5" m={4}>
+        <Typography component="h1" variant="h5" mt={2}>
           Productos Base
         </Typography>
+        <Button
+          variant="text"
+          disableElevation={true}
+          onClick={handleDownloadExcel}
+          sx={{
+            color: '#FFA07A',
+          }}
+        >
+          Descargar Excel
+        </Button>
         <div>
           <BaseProductDataTable
             onEdit={handleEdit}
