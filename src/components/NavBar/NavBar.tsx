@@ -1,26 +1,35 @@
-import { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import { downloadExcel } from "../../api/api";
-import { saveAs } from "file-saver";
-import { useNavigate } from "react-router-dom";
-import LegalDialog from "../LegalDialog/LegalDialog";
-import NavbarButtons from "../NavBarButtons/NavBarButtons";
+import { useState } from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { downloadExcel } from '../../api/api';
+import { saveAs } from 'file-saver';
+import { useNavigate } from 'react-router-dom';
+import LegalDialog from '../LegalDialog/LegalDialog';
+import NavbarButtons from '../NavBarButtons/NavBarButtons';
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleDownloadExcel = async () => {
+  const formatDate = (dateString: string) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}-${month}-${year}`;
+  };
+
+  const handleDownloadExcel = async (start: any, end: any) => {
     try {
-      const blob = await downloadExcel();
-      saveAs(blob, "productos_etex.xlsx");
+      // Convierte las fechas al formato deseado antes de llamar a downloadExcel
+      const startDate = formatDate(start);
+      const endDate = formatDate(end);
 
-      console.log("Descarga exitosa");
+      const blob = await downloadExcel(startDate, endDate);
+      saveAs(blob, 'productos_etex.xlsx');
+
+      console.log('Descarga exitosa');
     } catch (error) {
-      console.error("Error al llamar al servidor:", error);
+      console.error('Error al llamar al servidor:', error);
     }
   };
 
@@ -33,7 +42,7 @@ export default function NavBar() {
   };
 
   const handleLogoClick = () => {
-    navigate("/");
+    navigate('/');
   };
 
   return (
@@ -41,8 +50,8 @@ export default function NavBar() {
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "white",
-          boxShadow: "0px 0px 10px 0px lightgray",
+          backgroundColor: 'white',
+          boxShadow: '0px 0px 10px 0px lightgray',
         }}
       >
         <Toolbar>
@@ -50,7 +59,7 @@ export default function NavBar() {
             <img
               src="/favicon.ico"
               alt=""
-              style={{ height: "35px", cursor: "pointer" }}
+              style={{ height: '35px', cursor: 'pointer' }}
               onClick={handleLogoClick}
             />
           </div>
@@ -58,7 +67,7 @@ export default function NavBar() {
             variant="h6"
             component="div"
             onClick={handleLogoClick}
-            sx={{ flexGrow: 1, color: "#36454F", cursor: "pointer" }}
+            sx={{ flexGrow: 1, color: '#36454F', cursor: 'pointer' }}
           >
             Herramienta levantamiento de PVP
           </Typography>

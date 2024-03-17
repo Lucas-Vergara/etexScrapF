@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   IconButton,
   Drawer,
@@ -6,15 +6,21 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import EtexButton from "../Button/EtexButton";
-import { useNavigate } from "react-router-dom";
-import { useUserStore } from "../../store/UserStore";
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
+  Button,
+} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import EtexButton from '../Button/EtexButton';
+import { useNavigate } from 'react-router-dom';
+import { useUserStore } from '../../store/UserStore';
 
 interface NavbarButtonsProps {
   onLegalClick: () => void;
-  onDownloadExcel: () => void;
+  onDownloadExcel: (startDate: string, endDate: string) => void;
 }
 
 const NavbarButtons: React.FC<NavbarButtonsProps> = ({
@@ -24,23 +30,26 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const { currentUser } = useUserStore();
+  const [dateDialogOpen, setDateDialogOpen] = useState(false);
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
   const adminUsers = [
-    "paola.salcedo@etexgroup.com",
-    "tomas.meyer@etexgroup.com",
-    "carolina.sepulveda@etexgroup.com",
-    "jose.fuenzalida@etexgroup.com",
-    "admin",
+    'paola.salcedo@etexgroup.com',
+    'tomas.meyer@etexgroup.com',
+    'carolina.sepulveda@etexgroup.com',
+    'jose.fuenzalida@etexgroup.com',
+    'admin',
   ];
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login");
+    navigate('/login');
   };
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
       ) {
         return;
       }
@@ -48,23 +57,28 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
     };
 
   const handleUserClick = () => {
-    navigate("/profile");
+    navigate('/profile');
     setDrawerOpen(false);
   };
 
   const handleUsersClick = () => {
-    navigate("/users");
+    navigate('/users');
     setDrawerOpen(false);
   };
 
   const handleServiceInfoClick = () => {
-    navigate("/serviceInfo");
+    navigate('/serviceInfo');
     setDrawerOpen(false);
   };
 
   const handleEditBaseProductClick = () => {
-    navigate("/base-products");
+    navigate('/base-products');
     setDrawerOpen(false);
+  };
+
+  const handleDownloadWithDates = () => {
+    onDownloadExcel(startDate, endDate);
+    setDateDialogOpen(false); // Cierra el diálogo tras la descarga
   };
 
   const list = () => (
@@ -93,11 +107,12 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
           </ListItemButton>
         </ListItem>
       )}
+
       <ListItem disablePadding>
-        <ListItemButton onClick={onDownloadExcel}>
+        <ListItemButton onClick={() => setDateDialogOpen(true)}>
           <ListItemText
             primary="Descargar Documento"
-            sx={{ color: "#f57c00" }}
+            sx={{ color: '#f57c00' }}
           />
         </ListItemButton>
       </ListItem>
@@ -110,25 +125,58 @@ const NavbarButtons: React.FC<NavbarButtonsProps> = ({
   );
 
   return (
-    <div style={{ display: "flex" }}>
-      <EtexButton
-        original={false}
-        color="#f57c00"
-        text="Información importante"
-        onClick={onLegalClick}
-      />
-      <IconButton
-        aria-label="open drawer"
-        edge="start"
-        onClick={toggleDrawer(true)}
-        sx={{ mr: 2, ml: 2, color: "black" }}
-      >
-        <MenuIcon />
-      </IconButton>
-      <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
-        {list()}
-      </Drawer>
-    </div>
+    <>
+      <div style={{ display: 'flex' }}>
+        <EtexButton
+          original={false}
+          color="#f57c00"
+          text="Información importante"
+          onClick={onLegalClick}
+        />
+        <IconButton
+          aria-label="open drawer"
+          edge="start"
+          onClick={toggleDrawer(true)}
+          sx={{ mr: 2, ml: 2, color: 'black' }}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Drawer anchor="right" open={drawerOpen} onClose={toggleDrawer(false)}>
+          {list()}
+        </Drawer>
+      </div>
+      <Dialog open={dateDialogOpen} onClose={() => setDateDialogOpen(false)}>
+        <DialogTitle>Seleccione el rango de fechas</DialogTitle>
+        <DialogContent>
+          <TextField
+            margin="dense"
+            label="Fecha de inicio"
+            type="date"
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
+          <TextField
+            margin="dense"
+            label="Fecha de fin"
+            type="date"
+            fullWidth
+            InputLabelProps={{
+              shrink: true,
+            }}
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDateDialogOpen(false)}>Cancelar</Button>
+          <Button onClick={handleDownloadWithDates}>Descargar</Button>
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

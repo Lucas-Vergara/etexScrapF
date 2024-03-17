@@ -1,12 +1,12 @@
-import { BaseProduct, Product } from "../types/types";
+import { BaseProduct, Product } from '../types/types';
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const fetchProducts = async (): Promise<Product[]> => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const response = await fetch(`${BASE_URL}/product`, {
       headers: myHeaders,
     });
@@ -30,16 +30,16 @@ export const fetchProducts = async (): Promise<Product[]> => {
     }));
     return products;
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
     throw error;
   }
 };
 
 export const fetchBaseProducts = async (): Promise<BaseProduct[]> => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const response = await fetch(`${BASE_URL}/base-products`, {
       headers: myHeaders,
     });
@@ -56,20 +56,20 @@ export const fetchBaseProducts = async (): Promise<BaseProduct[]> => {
     }));
     return baseProducts;
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
     throw error;
   }
 };
 
 export const deleteBaseProduct = async (productId: string): Promise<void> => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
 
     const response = await fetch(`${BASE_URL}/base-products`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: myHeaders,
       body: JSON.stringify({
         _id: productId,
@@ -80,20 +80,20 @@ export const deleteBaseProduct = async (productId: string): Promise<void> => {
       throw new Error(`Error al eliminar el producto: ${response.statusText}`);
     }
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
     throw error;
   }
 };
 
 export const updateBaseProduct = async (product: BaseProduct): Promise<any> => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
 
     const response = await fetch(`${BASE_URL}/base-products`, {
-      method: "PUT",
+      method: 'PUT',
       headers: myHeaders,
       body: JSON.stringify({
         _id: product._id,
@@ -109,12 +109,12 @@ export const updateBaseProduct = async (product: BaseProduct): Promise<any> => {
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || "Error desconocido");
+      throw new Error(errorData.message || 'Error desconocido');
     }
 
     return await response.json();
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
     throw error;
   }
 };
@@ -123,108 +123,117 @@ export const createBaseProduct = async (
   newProduct: BaseProduct
 ): Promise<any> => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
 
     const response = await fetch(`${BASE_URL}/base-products`, {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: JSON.stringify(newProduct),
     });
 
     if (!response.ok) {
       const errorData = await response.json();
-      throw new Error(errorData.message || "Error desconocido");
+      throw new Error(errorData.message || 'Error desconocido');
     }
 
     return await response.json();
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
     throw error;
   }
 };
 
 export const fetchScrapingTracker = async () => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const response = await fetch(`${BASE_URL}/last-tracker`, {
       headers: myHeaders,
     });
     return await response.json();
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
     throw error;
   }
 };
 
 export const fetchDailyMissingProducts = async () => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const response = await fetch(`${BASE_URL}/daily-missing-products`, {
       headers: myHeaders,
     });
     const res = await response.json();
     return res;
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
     throw error;
   }
 };
 
 export const fetchMonthlyMissingProducts = async () => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const response = await fetch(`${BASE_URL}/monthly-missing-products`, {
       headers: myHeaders,
     });
     const res = await response.json();
     return res;
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
     throw error;
   }
 };
 
 export const runScript = async () => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const response = await fetch(`${BASE_URL}/ejecutar-script`, {
       headers: myHeaders,
     });
     await response.json();
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
   }
 };
 
-export const downloadExcel = async (): Promise<Blob> => {
+export const downloadExcel = async (
+  startDate?: string,
+  endDate?: string
+): Promise<Blob> => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
-    const response = await fetch(`${BASE_URL}/download-excel`, {
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
+
+    // Incluir fechas como parámetros de consulta si están presentes
+    let queryParams = '';
+    if (startDate && endDate) {
+      queryParams = `?start=${startDate}&end=${endDate}`;
+    }
+
+    const response = await fetch(`${BASE_URL}/download-excel${queryParams}`, {
       headers: myHeaders,
     });
 
     if (response.ok) {
-      // Convierte la respuesta a un blob (formato binario)
       const blob = await response.blob();
       return blob;
     } else {
       throw new Error(`Error en la descarga: ${response.statusText}`);
     }
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
     throw error;
   }
 };
@@ -234,13 +243,13 @@ export const login = async (
 ): Promise<{ access_token: string }> => {
   try {
     const response = await fetch(`${BASE_URL}/auth/login`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: formData.get("email"),
-        password: formData.get("password"),
+        username: formData.get('email'),
+        password: formData.get('password'),
       }),
     });
 
@@ -249,7 +258,7 @@ export const login = async (
       return data;
     } else {
       if (response.status === 401) {
-        throw new AuthenticationError("Credenciales incorrectas");
+        throw new AuthenticationError('Credenciales incorrectas');
       } else {
         throw new Error(`Error al iniciar sesión: ${response.statusText}`);
       }
@@ -261,9 +270,9 @@ export const login = async (
 
 export const validateToken = async () => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const req = await fetch(`${BASE_URL}/auth/check`, {
       headers: myHeaders,
     });
@@ -293,15 +302,15 @@ export const register = async (
 }> => {
   try {
     var myHeaders = new Headers();
-    const accessToken = localStorage.getItem("access_token");
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    const accessToken = localStorage.getItem('access_token');
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const response = await fetch(`${BASE_URL}/auth/register`, {
-      method: "POST",
+      method: 'POST',
       headers: myHeaders,
       body: JSON.stringify({
-        email: formData.get("email"),
-        password: formData.get("password"),
+        email: formData.get('email'),
+        password: formData.get('password'),
       }),
     });
     if (response.ok) {
@@ -318,9 +327,9 @@ export const register = async (
 export const deleteUser = async (userId: string): Promise<any> => {
   try {
     const response = await fetch(`${BASE_URL}/users/${userId}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         // Puedes incluir tokens de autenticación u otros encabezados si es necesario
       },
     });
@@ -336,9 +345,9 @@ export const deleteUser = async (userId: string): Promise<any> => {
 
 export const fetchCurrentUser = async () => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const req = await fetch(`${BASE_URL}/auth/user`, {
       headers: myHeaders,
     });
@@ -359,32 +368,32 @@ export const fetchUsers = async (): Promise<
   { id: string; email: string }[]
 > => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
     const response = await fetch(`${BASE_URL}/users`, {
       headers: myHeaders,
     });
     const users = await response.json();
     return users;
   } catch (error) {
-    console.error("Error al llamar al servidor:", error);
+    console.error('Error al llamar al servidor:', error);
     throw error;
   }
 };
 
 export const changePassword = async (formData: FormData): Promise<string> => {
   try {
-    const accessToken = localStorage.getItem("access_token");
+    const accessToken = localStorage.getItem('access_token');
     var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-    myHeaders.append("Authorization", `Bearer ${accessToken}`);
+    myHeaders.append('Content-Type', 'application/json');
+    myHeaders.append('Authorization', `Bearer ${accessToken}`);
 
     const response = await fetch(`${BASE_URL}/auth/change-password`, {
-      method: "PUT",
+      method: 'PUT',
       headers: myHeaders,
       body: JSON.stringify({
-        newPassword: formData.get("password"),
+        newPassword: formData.get('password'),
       }),
     });
 
@@ -394,7 +403,7 @@ export const changePassword = async (formData: FormData): Promise<string> => {
     const responseText = await response.text();
     return responseText;
   } catch (error) {
-    console.error("Error al cambiar la contraseña:", error);
+    console.error('Error al cambiar la contraseña:', error);
     throw error;
   }
 };
@@ -402,6 +411,6 @@ export const changePassword = async (formData: FormData): Promise<string> => {
 export class AuthenticationError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "AuthenticationError";
+    this.name = 'AuthenticationError';
   }
 }
